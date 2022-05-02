@@ -45,6 +45,7 @@ public class HttpUtil extends Thread {
             String line;
             while ((line = br.readLine()) != null) {
                 Log.d("RestHelper", "getJSON read: " + line);
+                sb.append(line);
             }
             br.close();
 
