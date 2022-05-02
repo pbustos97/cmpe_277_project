@@ -1,4 +1,6 @@
 package com.noidea.hootel;
+import android.content.Context;
+import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 import org.json.JSONException;
@@ -15,12 +17,16 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpUtil extends Thread {
-    private static final String ROOM_URL = "https://nua5fhfin1.execute-api.us-west-2.amazonaws.com/prod/";
+    private static String api_url;
+
+    public HttpUtil(int res, Context ctx) {
+        this.api_url = ctx.getString(res);
+    }
 
     public static JSONObject getJSON(String endpoint) throws JSONException {
         String jsonString = "";
         try {
-            URL url = new URL(ROOM_URL + endpoint);
+            URL url = new URL(api_url + endpoint);
 
             Log.d("RestHelper", "getJSON url: " + url.toString());
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -56,7 +62,7 @@ public class HttpUtil extends Thread {
         String result = "";
 
         try {
-            URL url = new URL(ROOM_URL + endpoint);
+            URL url = new URL(api_url + endpoint);
 
             Log.d("RestHelper", "getJSON url: " + url.toString());
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();

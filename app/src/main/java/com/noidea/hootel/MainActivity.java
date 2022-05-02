@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    HttpUtil.sendRequest("amenity", "PATCH", "{\n" +
+                    HttpUtil util = new HttpUtil(R.string.api_room, getApplicationContext());
+                    util.sendRequest("amenity", "PATCH", "{\n" +
                             "    \"body\" : {\n" +
                             "        \"amenityId\" : \"6c9c1801-0acd-41ee-8274-f1a41c678a39\", \n" +
                             "            \"amenityInfo\" :\n" +
