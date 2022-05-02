@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Hootel</string>
     <string name="api_room">https://nua5fhfin1.execute-api.us-west-2.amazonaws.com/prod/</string>
-    <string name="api_booking">https://5mbz63m677.execute-api.us-west-2.amazonaws.com/prod</string>
-    <string name="api_loyalty">https://dmtt6rt1c9.execute-api.us-west-2.amazonaws.com/dev</string>
-    <string name="api_hotel">https://2pai97g6d5.execute-api.us-west-2.amazonaws.com/dev</string>
-    <string name="api_user">https://2va96t2eh7.execute-api.us-west-2.amazonaws.com/dev</string>
+    <string name="api_booking">https://5mbz63m677.execute-api.us-west-2.amazonaws.com/prod/</string>
+    <string name="api_loyalty">https://dmtt6rt1c9.execute-api.us-west-2.amazonaws.com/dev/</string>
+    <string name="api_hotel">https://2pai97g6d5.execute-api.us-west-2.amazonaws.com/dev/</string>
+    <string name="api_user">https://2va96t2eh7.execute-api.us-west-2.amazonaws.com/dev/</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
