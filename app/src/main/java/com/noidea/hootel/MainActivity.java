@@ -41,5 +41,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", "user001");
+        this.addFragment(R.id.main_container, UserFragment.class, bundle);
+    }
+
+    protected void addFragment(int container, Class fragment, Bundle bundle) {
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(container, fragment, bundle)
+                .commit();
     }
 }
