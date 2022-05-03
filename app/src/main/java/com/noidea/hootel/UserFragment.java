@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
  * create an instance of this fragment.
  */
 public class UserFragment extends Fragment {
+    private final String TAG = UserFragment.class.getSimpleName();
 
     private static final String ARG_PARAM1 = "userId";
     private static final String ARG_PARAM2 = "param2";
@@ -82,7 +83,7 @@ public class UserFragment extends Fragment {
                 try {
                     HttpUtil util = new HttpUtil(R.string.api_user, getContext());
                     userRole[0] = util.getJSON("get-role?".concat(finalRole1));
-//                    Log.d("UserFragment", userRole[0].toString());
+//                    Log.d(TAG, userRole[0].toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -115,7 +116,9 @@ public class UserFragment extends Fragment {
     }
 
     protected void refreshUser() {
-        if (userLogin[0] != null && userRole[0] != null) {
+        Log.d(TAG, "refreshUser");
+        if (userLogin[0] != null) {
+            Log.d(TAG, "Refreshing basic user info");
             try {
                 JSONObject user = userLogin[0].getJSONObject("user");
                 String name = user.getString("fName") + " ";
@@ -127,6 +130,15 @@ public class UserFragment extends Fragment {
                 String address = user.getString("address");
                 address = address.concat(" " + user.getString("country"));
                 textViewAddress.setText(address);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (userRole[0] != null) {
+            Log.d(TAG, "Refreshing customer info");
+            try {
+                JSONObject user = userRole[0].getJSONObject("user");
+                // Collect list of bookingIds and send to booking fragment?
             } catch (Exception e) {
                 e.printStackTrace();
             }
