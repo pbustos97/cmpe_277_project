@@ -2,16 +2,14 @@ package com.noidea.hootel.Models;
 
 public class Hotel {
     private String hotelId;
-    private String address;
-    private String country;
+    private Address address;
     private String email;
     private String name;
     private String ownerId;
 
-    public Hotel(String hotelId, String address, String country, String email, String name, String ownerId) {
+    public Hotel(String hotelId, Address address, String email, String name, String ownerId) {
         this.hotelId = hotelId;
         this.address = address;
-        this.country = country;
         this.email = email;
         this.name = name;
         this.ownerId = ownerId;
@@ -30,9 +28,7 @@ public class Hotel {
     }
 
     public String getAddress() {
-        String msg = this.address;
-        msg.concat(", " + this.country);
-        return msg;
+        return this.address.getFullAddress();
     }
 
     public String getOwnerId() {

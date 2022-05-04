@@ -10,20 +10,16 @@ import java.util.ArrayList;
 
 public class User {
     protected String id;
-    protected String address;
-    protected String country;
+    protected Address address;
     protected String email;
-    protected String fName;
-    protected String lName;
+    protected Name name;
     protected ArrayList<String> roles;
 
-    public User(String id, String address, String country, String email, String fName, String lName, ArrayList<String> roles) {
+    public User(String id, Address address, String email, Name name, ArrayList<String> roles) {
         this.id = id;
         this.address = address;
-        this.country = country;
         this.email = email;
-        this.fName = fName;
-        this.lName = lName;
+        this.name = name;
         this.roles = roles;
     }
 
@@ -43,7 +39,9 @@ public class User {
             for (int i = 0; i < roles.length(); i++) {
                 role.add(roles.getString(i));
             }
-            return new User(id, address, country, email, fName, lName, role);
+            Address address1 = new Address(address, country);
+            Name name = new Name(fName, lName);
+            return new User(id, address1, email, name, role);
         } catch (JSONException e) {
             e.printStackTrace();
         }
