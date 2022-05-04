@@ -16,6 +16,7 @@ public class Customer{
     private User user;
 
     private Customer(User user, ArrayList<String> bookings, String currentBooking, String loyaltyId) {
+        this.user = user;
         this.bookings = bookings;
         this.currentBooking = currentBooking;
         this.loyaltyId = loyaltyId;
