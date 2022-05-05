@@ -1,5 +1,9 @@
 package com.noidea.hootel.Models;
 
+import com.noidea.hootel.HttpUtilSingle;
+
+import org.json.JSONObject;
+
 public class Hotel {
     private String hotelId;
     private Address address;
@@ -13,6 +17,25 @@ public class Hotel {
         this.email = email;
         this.name = name;
         this.ownerId = ownerId;
+    }
+
+    public static Hotel getHotel(String hotelId, String endpoint) {
+        String url = endpoint.concat("hotel-get?hotelId="+hotelId);
+        try {
+            JSONObject hotel = HttpUtilSingle.getJSON(url);
+            hotelId = hotel.getString("hotelId");
+            String address = hotel.getString("address");
+            String country = hotel.getString("country");
+            Address address1 = new Address(address, country);
+            String email = hotel.getString("email");
+            String name = hotel.getString("name");
+            String ownerId = hotel.getString("ownerId");
+            return new Hotel(hotelId, address1, email, name, ownerId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public String getName() {

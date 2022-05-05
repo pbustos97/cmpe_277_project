@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    android:id="@+id/selection_textView"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Selection Item"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/selection_textView_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selection Item Name"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/selection_textView_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selection Item Description"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"/>
+
+</LinearLayout>
