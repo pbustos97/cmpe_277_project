@@ -19,7 +19,7 @@ public class HotelListAdapter extends ArrayAdapter<Hotel> {
     private TextView textDescription;
 
     public HotelListAdapter(Context ctx, ArrayList<Hotel> hotelArrayList) {
-        super(ctx, R.layout.selection_item, hotelArrayList);
+        super(ctx, R.layout.selection_item, R.id.selection_textView_empty, hotelArrayList);
     }
 
     @NonNull

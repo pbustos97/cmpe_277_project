@@ -1,6 +1,8 @@
 package com.noidea.hootel.Models;
 
 import com.noidea.hootel.HttpUtilSingle;
+import com.noidea.hootel.Models.Helpers.Address;
+import com.noidea.hootel.Models.Helpers.Name;
 
 import org.json.JSONArray;
 import org.json.JSONException;

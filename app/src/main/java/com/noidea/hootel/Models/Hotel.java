@@ -1,10 +1,18 @@
 package com.noidea.hootel.Models;
 
-import com.noidea.hootel.HttpUtilSingle;
+import android.util.Log;
 
+import com.noidea.hootel.HttpUtil;
+import com.noidea.hootel.HttpUtilSingle;
+import com.noidea.hootel.Models.Helpers.Address;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 public class Hotel {
+    private static final String TAG = Hotel.class.getSimpleName();
+
     private String hotelId;
     private Address address;
     private String email;
@@ -45,6 +53,33 @@ public class Hotel {
 
         return null;
     }
+
+    public static String getHotelList(String endpoint) {
+        final String[] msg = {null};
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = endpoint.concat("hotel-get?hotelId=-1");
+                try {
+                    JSONObject obj = HttpUtilSingle.getJSON(url);
+                    JSONArray arr = obj.getJSONArray("hotels");
+                    Log.d(TAG, arr.toString());
+                    msg[0] = arr.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msg[0];
+    }
+
+
 
     public String getName() {
         return this.name;

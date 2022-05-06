@@ -1,7 +1,7 @@
 package com.noidea.hootel.Models;
 
 import com.noidea.hootel.HttpUtilSingle;
-import com.noidea.hootel.R;
+import com.noidea.hootel.Models.Helpers.Address;
 
 import org.json.JSONObject;
 
@@ -31,7 +31,7 @@ public class Branch {
         this.ownerId = ownerId;
     }
 
-    public Branch getBranch(String branchId, String hotelId, String endpoint) {
+    public static Branch getBranch(String branchId, String hotelId, String endpoint) {
         String url = endpoint.concat("branch-get?branchId="+branchId+"&hotelId="+hotelId);
         try {
             JSONObject branch = HttpUtilSingle.getJSON(url);

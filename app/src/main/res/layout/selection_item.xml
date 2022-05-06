@@ -18,5 +18,9 @@
         android:text="Selection Item Description"
         android:paddingLeft="10dp"
         android:textColor="@color/black"/>
-
+    <TextView
+        android:id="@+id/selection_textView_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 </LinearLayout>

@@ -4,22 +4,19 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
-import com.noidea.hootel.Models.Address;
+import com.noidea.hootel.Models.Helpers.Address;
 import com.noidea.hootel.Models.Branch;
 import com.noidea.hootel.Models.Hotel;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,8 +32,9 @@ public class HotelFragment extends Fragment {
     private ArrayList<Hotel> hotels;
     private ArrayList<Branch> branches;
 
+    private ListView hotelList;
+
     public HotelFragment() {
-        // Required empty public constructor
     }
 
     public static HotelFragment newInstance(String param1, String param2) {
@@ -51,19 +49,23 @@ public class HotelFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        hotels = new ArrayList<Hotel>();
+        branches = new ArrayList<Branch>();
+
         if (getArguments() != null) {
-            String hotelsStr = getArguments().getString(ARG_PARAM1);
-            String branchesStr = getArguments().getString(ARG_PARAM2);
+            String hotelStr = getArguments().getString(ARG_PARAM1);
+            String branchStr = getArguments().getString(ARG_PARAM2);
 
             try {
-                JSONArray arr = new JSONArray(hotelsStr);
+                JSONArray arr = new JSONArray(hotelStr);
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
                     String hotelId = obj.getString("hotelId");
-                    Address address = new Address(obj.getString("address"),
-                                                  obj.getString("country"));
+                    Address address = new Address(obj.getString("Address"),
+                                                  obj.getString("Country"));
                     String email = obj.getString("email");
-                    String name = obj.getString("name");
+                    String name = obj.getString("HotelName");
                     String ownerId = obj.getString("ownerId");
                     hotels.add(new Hotel(hotelId, address, email, name, ownerId));
                 }
@@ -73,14 +75,18 @@ public class HotelFragment extends Fragment {
         } else {
             return;
         }
-        HotelListAdapter listAdapter = new HotelListAdapter(getContext(), hotels);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hotel, container, false);
+
+        HotelListAdapter listAdapter = new HotelListAdapter(getContext(), hotels);
+        hotelList = view.findViewById(R.id.HotelListView);
+        hotelList.setAdapter(listAdapter);
+        hotelList.setClickable(true);
+
         return view;
     }
 }
