@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.noidea.hootel.Models.Hotel;
+
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putString("userId", "user001");
-        this.addFragment(R.id.main_container, UserFragment.class, bundle);
+        bundle.putString("hotelId", "hotel001");
+        bundle.putString("hotels", Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel)));
+        this.addFragment(R.id.main_container, HotelFragment.class, bundle);
     }
 
     protected void addFragment(int container, Class fragment, Bundle bundle) {

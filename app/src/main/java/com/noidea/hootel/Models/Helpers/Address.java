@@ -1,4 +1,4 @@
-package com.noidea.hootel.Models;
+package com.noidea.hootel.Models.Helpers;
 
 public class Address {
     protected String country;

@@ -1,5 +1,7 @@
 package com.noidea.hootel;
 
+import android.util.Log;
+
 import com.noidea.hootel.Models.CreditCard;
 
 import org.json.JSONObject;
@@ -13,9 +15,10 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpUtilSingle {
+    private static final String TAG = HttpUtilSingle.class.getSimpleName();
     public static JSONObject getJSON(String endpoint) {
         try {
-
+            Log.d(TAG, endpoint);
             URL url = new URL(endpoint);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setConnectTimeout(10000);
