@@ -11,11 +11,37 @@ public class Branch {
     private String email;
     private String name;
     private Address address;
+    private String ownerId;
+
+    public Branch(String branchId, String hotelId, String email, String name, Address address) {
+        this.branchId = branchId;
+        this.hotelId = hotelId;
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.ownerId = null;
+    }
+
+    public Branch(String branchId, String hotelId, String email, String name, Address address, String ownerId) {
+        this.branchId = branchId;
+        this.hotelId = hotelId;
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.ownerId = ownerId;
+    }
 
     public Branch getBranch(String branchId, String hotelId, String endpoint) {
         String url = endpoint.concat("branch-get?branchId="+branchId+"&hotelId="+hotelId);
         try {
             JSONObject branch = HttpUtilSingle.getJSON(url);
+            branch = branch.getJSONObject("branch");
+            String address = branch.getString("address");
+            String country = branch.getString("country");
+            Address address1 = new Address(address, country);
+            String email = branch.getString("email");
+            String name = branch.getString("branchName");
+            return new Branch(branchId, hotelId, email, name, address1);
         } catch (Exception e) {
             e.printStackTrace();
         }

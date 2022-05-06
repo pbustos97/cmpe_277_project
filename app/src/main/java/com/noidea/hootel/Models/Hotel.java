@@ -11,6 +11,14 @@ public class Hotel {
     private String name;
     private String ownerId;
 
+    public Hotel(String hotelId, Address address, String email, String name) {
+        this.hotelId = hotelId;
+        this.address = address;
+        this.email = email;
+        this.name = name;
+        this.ownerId = null;
+    }
+
     public Hotel(String hotelId, Address address, String email, String name, String ownerId) {
         this.hotelId = hotelId;
         this.address = address;
