@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Hootel"
         tools:ignore="ExtraText">
         <activity
+            android:name=".LoggedInActivity"
+            android:exported="false" />
+        <activity
             android:name=".HotelActivity"
             android:exported="false" />
         <activity
@@ -24,8 +27,8 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

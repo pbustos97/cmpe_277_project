@@ -1,4 +1,4 @@
-package com.noidea.hootel;
+package com.noidea.hootel.Fragments;
 
 import android.os.Bundle;
 
@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.json.JSONException;
+import com.noidea.hootel.HttpUtil;
+import com.noidea.hootel.R;
+
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.

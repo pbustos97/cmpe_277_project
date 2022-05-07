@@ -1,4 +1,4 @@
-package com.noidea.hootel;
+package com.noidea.hootel.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.noidea.hootel.HotelActivity;
+import com.noidea.hootel.HotelListAdapter;
 import com.noidea.hootel.Models.Helpers.Address;
 import com.noidea.hootel.Models.Branch;
 import com.noidea.hootel.Models.Hotel;
+import com.noidea.hootel.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
