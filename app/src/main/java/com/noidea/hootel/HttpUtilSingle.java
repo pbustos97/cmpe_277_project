@@ -1,5 +1,7 @@
 package com.noidea.hootel;
 
+import android.util.Log;
+
 import com.noidea.hootel.Models.CreditCard;
 
 import org.json.JSONObject;
@@ -36,11 +38,8 @@ public class HttpUtilSingle {
             String jsonString = sb.toString();
 
             return new JSONObject(jsonString);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
+            Log.d("HTTpUtiliSingle: ", e.toString());
             e.printStackTrace();
         }
         return null;

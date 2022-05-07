@@ -53,10 +53,11 @@ public class UserFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userId = getArguments().getString(ARG_PARAM1);
+            Log.d(TAG, "ARG_PARAM1 ==> " + ARG_PARAM1);
         }
 
         String role = "userId=".concat(userId);
-
+        Log.d(TAG, "role ==> " + role);
         String finalRole = role;
         userLogin = new JSONObject[1];
         new Thread(new Runnable() {
@@ -64,8 +65,6 @@ public class UserFragment extends Fragment {
             public void run() {
                 try {
                     HttpUtil util = new HttpUtil(R.string.api_user, getContext());
-
-
                     userLogin[0] = util.getJSON("user-login?".concat(finalRole));
                 } catch (Exception e) {
                     e.printStackTrace();
