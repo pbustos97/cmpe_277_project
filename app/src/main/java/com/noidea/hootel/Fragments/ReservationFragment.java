@@ -1,4 +1,4 @@
-package com.noidea.hootel;
+package com.noidea.hootel.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

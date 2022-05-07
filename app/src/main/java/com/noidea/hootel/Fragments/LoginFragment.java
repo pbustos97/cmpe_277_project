@@ -1,4 +1,4 @@
-package com.noidea.hootel;
+package com.noidea.hootel.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.noidea.hootel.Cognito.CognitoSettings;
+import com.noidea.hootel.MainActivity;
 import com.noidea.hootel.Models.User;
+import com.noidea.hootel.R;
 
 /**
  * A simple {@link Fragment} subclass.

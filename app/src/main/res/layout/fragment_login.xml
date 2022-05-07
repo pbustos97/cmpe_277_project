@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
+    tools:context=".Fragments.LoginFragment">
 
     <LinearLayout
         android:id="@+id/LoginInputFields"
@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"/>
+                android:text="Username"/>
             <EditText
                 android:id="@+id/LoginEmailField"
                 android:layout_width="wrap_content"
@@ -68,7 +68,8 @@
             android:id="@+id/LoginButtonRegistration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register" />
+            android:text="Register"
+            android:visibility="invisible"/>
     </LinearLayout>
 
 

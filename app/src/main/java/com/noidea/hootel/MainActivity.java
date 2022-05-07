@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
-import com.noidea.hootel.Models.Hotel;
+import com.noidea.hootel.Fragments.LoginFragment;
 import com.noidea.hootel.Models.User;
 
 import org.json.JSONException;

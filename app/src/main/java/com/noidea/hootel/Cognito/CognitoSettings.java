@@ -2,7 +2,6 @@ package com.noidea.hootel.Cognito;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
@@ -15,8 +14,6 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Chal
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.amazonaws.regions.Regions;
-import com.noidea.hootel.LoginFragment;
-import com.noidea.hootel.MainActivity;
 import com.noidea.hootel.Models.User;
 import com.noidea.hootel.R;
 
