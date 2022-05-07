@@ -26,7 +26,7 @@ public class UserFragment extends Fragment {
     private static final String ARG_PARAM1 = "userId";
     private static final String ARG_PARAM2 = "param2";
 
-    private String userId;
+    private static String userId;
     private JSONObject[] userLogin;
     private JSONObject[] userRole;
 

@@ -1,10 +1,12 @@
 package com.noidea.hootel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
 import com.noidea.hootel.Models.Hotel;
+import com.noidea.hootel.Models.User;
 
 import org.json.JSONException;
 
@@ -45,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
         Bundle bundle = new Bundle();
-        bundle.putString("userId", "user001");
-        bundle.putString("hotelId", "hotel001");
-        bundle.putString("hotels", Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel)));
-        this.addFragment(R.id.main_container, HotelFragment.class, bundle);
+//        bundle.putString("userId", "user001");
+//        bundle.putString("hotelId", "hotel001");
+//        bundle.putString("hotels", Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel)));
+        this.addFragment(R.id.main_container, LoginFragment.class, bundle);
     }
 
     protected void addFragment(int container, Class fragment, Bundle bundle) {
@@ -56,5 +58,17 @@ public class MainActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .add(container, fragment, bundle)
                 .commit();
+    }
+
+    protected void removeFragment() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+        getSupportFragmentManager().beginTransaction()
+                .remove(fragment).commit();
+    }
+
+    public void loggedIn() {
+        if (User.isLoggedIn()) {
+            this.removeFragment();
+        }
     }
 }
