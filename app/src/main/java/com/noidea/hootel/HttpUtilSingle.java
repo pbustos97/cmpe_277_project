@@ -18,6 +18,7 @@ public class HttpUtilSingle {
     public static JSONObject getJSON(String endpoint) {
         try {
 
+
             URL url = new URL(endpoint);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setConnectTimeout(10000);
@@ -40,6 +41,7 @@ public class HttpUtilSingle {
             return new JSONObject(jsonString);
         } catch (Exception e) {
             Log.d("HTTpUtiliSingle: ", e.toString());
+
             e.printStackTrace();
         }
         return null;

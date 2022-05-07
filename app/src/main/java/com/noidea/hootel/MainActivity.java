@@ -1,6 +1,7 @@
 package com.noidea.hootel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.widget.ListView;
@@ -8,6 +9,9 @@ import android.widget.ListView;
 import com.noidea.hootel.Models.Hotel;
 import com.noidea.hootel.Models.Reservation;
 import com.noidea.hootel.Models.Room;
+
+import com.noidea.hootel.Fragments.LoginFragment;
+import com.noidea.hootel.Models.User;
 
 import org.json.JSONException;
 
@@ -22,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Bundle bundle = new Bundle();
         bundle.putString("userId", "user005");
         bundle.putString("hotelId", "hotel001");

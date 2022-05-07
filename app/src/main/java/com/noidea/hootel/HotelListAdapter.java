@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +29,6 @@ public class HotelListAdapter extends ArrayAdapter<Hotel> {
         }
 
         // Set views on selection_item. Just Hotel Name with ID?
-
         return super.getView(position, convertView, parent);
     }
 }

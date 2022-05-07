@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
 public class User {
     protected String id;
     protected Address address;
@@ -70,6 +69,7 @@ public class User {
         String url = endpoint.concat("user-login?userId="+userId);
         JSONObject user = null;
         user = new getJSONObj().execute(url).get();
+
         try {
             user = user.getJSONObject("user");
             String id = user.getString("userId");

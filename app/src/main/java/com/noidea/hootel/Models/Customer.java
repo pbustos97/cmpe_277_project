@@ -23,6 +23,7 @@ public class Customer{
     }
 
     public Customer getCustomer(String userId, String endpoint) {
+
         String url = endpoint.concat("get-role?userId=" + userId + "&role=Customer");
         JSONObject customer = HttpUtilSingle.getJSON(url);
         try {

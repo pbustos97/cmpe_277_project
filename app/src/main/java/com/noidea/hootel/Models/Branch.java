@@ -1,6 +1,7 @@
 package com.noidea.hootel.Models;
 
 import com.noidea.hootel.getJSONObj;
+
 import com.noidea.hootel.Models.Helpers.Address;
 
 import org.json.JSONObject;
@@ -86,6 +87,7 @@ public class Branch {
         JSONObject branch = null;
         branch = new getJSONObj().execute(url).get();
         try {
+
             branch = branch.getJSONObject("branch");
             String address = branch.getString("address");
             String country = branch.getString("country");
@@ -99,3 +101,4 @@ public class Branch {
         return null;
     }
 }
+
