@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.noidea.hootel.Cognito.CognitoSettings;
+import com.noidea.hootel.LoggedInActivity;
 import com.noidea.hootel.MainActivity;
 import com.noidea.hootel.Models.User;
 import com.noidea.hootel.R;
@@ -98,7 +99,7 @@ public class LoginFragment extends Fragment {
         }
         if (User.isLoggedIn()) {
             Toast.makeText(getContext(), "Signed in", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            Intent intent = new Intent(getContext(), LoggedInActivity.class);
             startActivity(intent);
         } else {
             Toast.makeText(getContext(), "Failed to sign in", Toast.LENGTH_LONG).show();

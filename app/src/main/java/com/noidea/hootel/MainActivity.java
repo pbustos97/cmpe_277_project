@@ -16,16 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    HttpUtil.getJSON("allroomInfo");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
