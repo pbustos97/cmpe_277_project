@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+      
         Bundle bundle = new Bundle();
         bundle.putString("userId", "user005");
         bundle.putString("hotelId", "hotel001");

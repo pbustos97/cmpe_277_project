@@ -12,8 +12,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.noidea.hootel.HttpUtil;
+import com.noidea.hootel.LoggedInActivity;
+import com.noidea.hootel.Models.User;
 import com.noidea.hootel.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -29,11 +32,12 @@ public class UserFragment extends Fragment {
 
     private static String userId;
     private JSONObject[] userLogin;
-    private JSONObject[] userRole;
+    private JSONObject[] userLoyalty;
 
     private TextView textViewName;
     private TextView textViewEmail;
     private TextView textViewAddress;
+    private TextView textViewLoyalty;
 
     private Button bRefreshUser;
 
@@ -60,37 +64,29 @@ public class UserFragment extends Fragment {
 
         String finalRole = role;
         userLogin = new JSONObject[1];
+        userLoyalty = new JSONObject[1];
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     HttpUtil util = new HttpUtil(R.string.api_user, getContext());
-
-
                     userLogin[0] = util.getJSON("user-login?".concat(finalRole));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-
-        role = role.concat("&role=Customer");
-
-        String finalRole1 = role;
-        userRole = new JSONObject[1];
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    HttpUtil util = new HttpUtil(R.string.api_user, getContext());
-                    userRole[0] = util.getJSON("get-role?".concat(finalRole1));
-//                    Log.d(TAG, userRole[0].toString());
+                    HttpUtil util2 = new HttpUtil(R.string.api_loyalty, getContext());
+                    userLoyalty[0] = util2.getJSON("loyalty-get?".concat(finalRole));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-
     }
 
     @Override
@@ -100,6 +96,7 @@ public class UserFragment extends Fragment {
         textViewName = view.findViewById(R.id.textViewName);
         textViewEmail = view.findViewById(R.id.textViewEmail);
         textViewAddress = view.findViewById(R.id.textViewAddress);
+        textViewLoyalty = view.findViewById(R.id.textViewLoyalty);
         bRefreshUser = view.findViewById(R.id.refreshUser);
         bRefreshUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,13 +104,17 @@ public class UserFragment extends Fragment {
                 refreshUser();
             }
         });
-        refreshUser();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (!User.isLoggedIn()) {
+            LoggedInActivity parent = (LoggedInActivity) getActivity();
+            parent.changeFragment("Selection");
+        }
+        refreshUser();
     }
 
     protected void refreshUser() {
@@ -134,15 +135,20 @@ public class UserFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            Log.e(TAG, "User was not found");
         }
-        if (userRole[0] != null) {
-            Log.d(TAG, "Refreshing customer info");
+        if (userLoyalty[0] != null) {
+            Log.d(TAG, "Refreshing user's loyalty info");
             try {
-                JSONObject user = userRole[0].getJSONObject("user");
-                // Collect list of bookingIds and send to booking fragment?
-            } catch (Exception e) {
+                JSONObject loyalty = userLoyalty[0].getJSONObject("loyalty");
+                String points = "Loyalty Points: ".concat(loyalty.getString("amount"));
+                textViewLoyalty.setText(points);
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
+        } else {
+            Log.e(TAG, "Loyalty account was not found");
         }
     }
 }

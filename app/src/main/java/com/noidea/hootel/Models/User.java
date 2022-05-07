@@ -1,5 +1,6 @@
 package com.noidea.hootel.Models;
 
+import com.noidea.hootel.HttpUtilSingle;
 import com.noidea.hootel.getJSONObj;
 import com.noidea.hootel.Models.Helpers.Address;
 import com.noidea.hootel.Models.Helpers.Name;
@@ -91,5 +92,24 @@ public class User {
         }
         return null;
     }
+    public static String getUserId() {
+        return id;
+    }
 
+    public static void setToken(String token) {
+        accessToken = id;
+    }
+
+    public static String getToken() { return accessToken; }
+
+    public static void setUserId(String userId) {
+        id = userId;
+    }
+
+    public static boolean isLoggedIn() {
+        if (accessToken == null || id == null) {
+            return false;
+        }
+        return true;
+    }
 }
