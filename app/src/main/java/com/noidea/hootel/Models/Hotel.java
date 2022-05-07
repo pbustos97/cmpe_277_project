@@ -1,14 +1,14 @@
 package com.noidea.hootel.Models;
 
 import android.util.Log;
-
-import com.noidea.hootel.HttpUtil;
 import com.noidea.hootel.HttpUtilSingle;
+import com.noidea.hootel.getJSONObj;
+
 import com.noidea.hootel.Models.Helpers.Address;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONStringer;
+
 
 public class Hotel {
     private static final String TAG = Hotel.class.getSimpleName();
@@ -38,7 +38,8 @@ public class Hotel {
     public static Hotel getHotel(String hotelId, String endpoint) {
         String url = endpoint.concat("hotel-get?hotelId="+hotelId);
         try {
-            JSONObject hotel = HttpUtilSingle.getJSON(url);
+            JSONObject hotel = new getJSONObj().execute(url).get();
+
             hotelId = hotel.getString("hotelId");
             String address = hotel.getString("address");
             String country = hotel.getString("country");
@@ -101,3 +102,4 @@ public class Hotel {
         return this.ownerId;
     }
 }
+

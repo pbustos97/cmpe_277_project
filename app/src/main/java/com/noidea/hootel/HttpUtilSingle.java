@@ -15,10 +15,10 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpUtilSingle {
-    private static final String TAG = HttpUtilSingle.class.getSimpleName();
     public static JSONObject getJSON(String endpoint) {
         try {
-            Log.d(TAG, endpoint);
+
+
             URL url = new URL(endpoint);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setConnectTimeout(10000);
@@ -39,11 +39,9 @@ public class HttpUtilSingle {
             String jsonString = sb.toString();
 
             return new JSONObject(jsonString);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
+            Log.d("HTTpUtiliSingle: ", e.toString());
+
             e.printStackTrace();
         }
         return null;
