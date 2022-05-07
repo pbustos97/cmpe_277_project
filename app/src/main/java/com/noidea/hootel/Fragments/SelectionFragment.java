@@ -1,4 +1,4 @@
-package com.noidea.hootel;
+package com.noidea.hootel.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.noidea.hootel.LoggedInActivity;
+import com.noidea.hootel.MainActivity;
 import com.noidea.hootel.Models.User;
+import com.noidea.hootel.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +23,7 @@ import com.noidea.hootel.Models.User;
 public class SelectionFragment extends Fragment {
 
     private Button bLogout;
+    private Button bProfile;
 
     public SelectionFragment() {
         // Required empty public constructor
@@ -50,6 +54,13 @@ public class SelectionFragment extends Fragment {
                 Logout();
             }
         });
+        bProfile = view.findViewById(R.id.SelectionUser);
+        bProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Profile();
+            }
+        });
         return view;
     }
 
@@ -58,5 +69,10 @@ public class SelectionFragment extends Fragment {
         User.setToken(null);
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
+    }
+
+    private void Profile() {
+        LoggedInActivity parent = (LoggedInActivity) getActivity();
+        parent.changeFragment("Profile");
     }
 }

@@ -5,7 +5,7 @@
     android:id="@+id/SelectionConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SelectionFragment">
+    tools:context=".Fragments.SelectionFragment">
 
     <Button
         android:id="@+id/SelectionHotel"

@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Selection;
 
+import com.noidea.hootel.Fragments.SelectionFragment;
+import com.noidea.hootel.Fragments.UserFragment;
 import com.noidea.hootel.Models.User;
 
 public class LoggedInActivity extends AppCompatActivity {
@@ -44,6 +47,23 @@ public class LoggedInActivity extends AppCompatActivity {
         if (!User.isLoggedIn()) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+        }
+    }
+
+    public void changeFragment(String fragment) {
+        removeFragment();
+        Bundle bundle = new Bundle();
+        if (fragment.equals("Profile")) {
+            bundle.putString("userId", User.getUserId());
+            addFragment(R.id.main_container, UserFragment.class, bundle);
+        } else if (fragment.equals("Selection")) {
+            addFragment(R.id.main_container, SelectionFragment.class, bundle);
+        } else if (fragment.equals("Hotels")) {
+            // Choose Hotel List Fragment
+        } else if (fragment.equals("Reservations")) {
+            // Choose Reservations Fragment
+        } else {
+            loggedIn();
         }
     }
 }

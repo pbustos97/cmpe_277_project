@@ -98,7 +98,7 @@ public class LoginFragment extends Fragment {
             e.printStackTrace();
         }
         if (User.isLoggedIn()) {
-            Toast.makeText(getContext(), "Signed in", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), "Signed in", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getContext(), LoggedInActivity.class);
             startActivity(intent);
         } else {
