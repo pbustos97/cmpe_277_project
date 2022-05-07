@@ -22,7 +22,8 @@ public class Customer{
         this.loyaltyId = loyaltyId;
     }
 
-    public static Customer getCustomer(String userId, String endpoint) {
+    public Customer getCustomer(String userId, String endpoint) {
+
         String url = endpoint.concat("get-role?userId=" + userId + "&role=Customer");
         JSONObject customer = HttpUtilSingle.getJSON(url);
         try {

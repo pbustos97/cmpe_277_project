@@ -1,8 +1,6 @@
 package com.noidea.hootel.Models;
 
-import android.util.Log;
-
-import com.noidea.hootel.HttpUtilSingle;
+import com.noidea.hootel.getJSONObj;
 import com.noidea.hootel.Models.Helpers.Address;
 import com.noidea.hootel.Models.Helpers.Name;
 
@@ -11,12 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
+import java.util.concurrent.ExecutionException;
 public class User {
-    private static final String TAG = User.class.getSimpleName();
-
-    protected static String id;
-    protected static String accessToken;
+    protected String id;
     protected Address address;
     protected String email;
     protected Name name;
@@ -30,9 +25,51 @@ public class User {
         this.roles = roles;
     }
 
-    public static User getUser(String userId, String endpoint) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
+
+    public ArrayList<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<String> roles) {
+        this.roles = roles;
+    }
+
+    public static User getUser(String userId, String endpoint) throws ExecutionException, InterruptedException {
         String url = endpoint.concat("user-login?userId="+userId);
-        JSONObject user = HttpUtilSingle.getJSON(url);
+        JSONObject user = null;
+        user = new getJSONObj().execute(url).get();
+
         try {
             user = user.getJSONObject("user");
             String id = user.getString("userId");
@@ -55,22 +92,4 @@ public class User {
         return null;
     }
 
-    public static String getUserId() {
-        return id;
-    }
-
-    public static void setToken(String token) {
-        accessToken = id;
-    }
-
-    public static void setUserId(String userId) {
-        id = userId;
-    }
-
-    public static boolean isLoggedIn() {
-        if (accessToken == null || id == null) {
-            return false;
-        }
-        return true;
-    }
 }

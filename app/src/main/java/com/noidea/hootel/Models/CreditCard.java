@@ -27,7 +27,8 @@ public class CreditCard {
         this.expDate = expDate;
     }
 
-    public static CreditCard getCard(String ownerId, String endpoint) {
+    public CreditCard getCard(String ownerId, String endpoint) {
+
         try {
             String userId;
             String Number;

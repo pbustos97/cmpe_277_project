@@ -4,46 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".UserFragment">
-
+    tools:context=".HotelReservationFragment">
 
     <Button
-        android:id="@+id/refreshUser"
+        android:id="@+id/refreshHoteles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Refresh User"
+        android:text="Refresh Reservation"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/LayoutUserInfo" />
+        app:layout_constraintBottom_toTopOf="@+id/LayoutReservationInfo" />
 
     <LinearLayout
-        android:id="@+id/LayoutUserInfo"
+        android:id="@+id/LayoutReservationInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/refreshUser"
+        app:layout_constraintTop_toBottomOf="@+id/refreshHoteles"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/hotelreservation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name" />
-
-        <TextView
-            android:id="@+id/textViewEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="email@email.com" />
-
-        <TextView
-            android:id="@+id/textViewAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Address, Country" />
+            android:text="reservation" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -3,6 +3,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,12 +60,48 @@ public class HttpUtil extends Thread {
         return new JSONObject(jsonString);
     }
 
+    public static JSONArray getJSONArray(String endpoint) throws JSONException {
+        String jsonString = "";
+        try {
+            URL url = new URL(api_url + endpoint);
+
+            Log.d("RestHelper", "getJSON url: " + url.toString());
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
+            connection.setDoOutput(true);
+            Log.d("RestHelper", "connection created");
+            connection.setRequestMethod("GET");
+            Log.d("RestHelper", "set request method");
+            connection.connect();
+            Log.d("RestHelper", "getJSON Connected");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                Log.d("RestHelper", "getJSON read: " + line);
+                sb.append(line);
+            }
+            br.close();
+
+            jsonString = sb.toString();
+            Log.d("RestHelper", "getJSON jsonString: " + jsonString);
+
+        } catch (Exception e) {
+            Log.e("RestHelper", "getJSON error: " + e.getMessage());
+        }
+        Log.d("RestHelper", "JSONArray: " + new JSONArray(jsonString).toString());
+        return new JSONArray(jsonString);
+    }
+
     public static JSONObject sendRequest(String endpoint, String Method, String Json) throws JSONException {
         BufferedReader reader = null;
         String result = "";
 
         try {
-            URL url = new URL(api_url + endpoint);
+            URL url = new URL(endpoint);
 
             Log.d("RestHelper", "getJSON url: " + url.toString());
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -77,7 +115,6 @@ public class HttpUtil extends Thread {
             connection.setRequestProperty("Charset", "UTF-8");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("accept", "*/*");
-            StringBuilder sb = new StringBuilder();
             if (Json != null && !TextUtils.isEmpty(Json)) {
                 connection.setRequestProperty("Content-Length", String.valueOf(Json.length()));
                 OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
@@ -100,6 +137,5 @@ public class HttpUtil extends Thread {
         }
         return new JSONObject(result);
     }
-
 
 }
