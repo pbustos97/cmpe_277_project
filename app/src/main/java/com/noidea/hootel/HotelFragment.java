@@ -1,12 +1,15 @@
 package com.noidea.hootel;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.noidea.hootel.Models.Helpers.Address;
@@ -86,6 +89,21 @@ public class HotelFragment extends Fragment {
         hotelList = view.findViewById(R.id.HotelListView);
         hotelList.setAdapter(listAdapter);
         hotelList.setClickable(true);
+        hotelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                Log.d(TAG, "select item: " + pos);
+                Intent intent = new Intent(getActivity(), HotelActivity.class);
+                Hotel hotel = hotels.get(pos);
+                Log.d(TAG, "hotel: " + hotel.getHotelId());
+                intent.putExtra("hotelId", hotel.getHotelId());
+                intent.putExtra("userId", "user001");
+                intent.putExtra("hotelName", hotel.getName());
+                intent.putExtra("hotelAddress", hotel.getAddress());
+                intent.putExtra("hotelEmail", hotel.getEmail());
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

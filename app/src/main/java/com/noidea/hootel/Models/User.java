@@ -1,5 +1,7 @@
 package com.noidea.hootel.Models;
 
+import android.util.Log;
+
 import com.noidea.hootel.HttpUtilSingle;
 import com.noidea.hootel.Models.Helpers.Address;
 import com.noidea.hootel.Models.Helpers.Name;
@@ -11,7 +13,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class User {
-    protected String id;
+    private static final String TAG = User.class.getSimpleName();
+
+    protected static String id;
+    protected static String accessToken;
     protected Address address;
     protected String email;
     protected Name name;
@@ -48,5 +53,24 @@ public class User {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getUserId() {
+        return id;
+    }
+
+    public static void setToken(String token) {
+        accessToken = id;
+    }
+
+    public static void setUserId(String userId) {
+        id = userId;
+    }
+
+    public static boolean isLoggedIn() {
+        if (accessToken == null || id == null) {
+            return false;
+        }
+        return true;
     }
 }
