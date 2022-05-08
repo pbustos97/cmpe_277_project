@@ -15,3 +15,4 @@
 local.properties
 //*secrets.xml
 app/src/main/res/values/secrets.xml
+/.idea/*
