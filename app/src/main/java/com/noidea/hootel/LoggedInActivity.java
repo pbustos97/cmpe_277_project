@@ -69,4 +69,16 @@ public class LoggedInActivity extends AppCompatActivity {
             loggedIn();
         }
     }
+
+    public void changeActivity(String activity) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(getApplicationContext(), UIActivity.class);
+        if (activity.equals("Profile")) {
+            intent.putExtra("fragment", "profile");
+            startActivity(intent, bundle);
+        } else if (activity.equals("Hotels")) {
+            intent.putExtra("fragment", "hotels");
+            startActivity(intent, bundle);
+        }
+    }
 }

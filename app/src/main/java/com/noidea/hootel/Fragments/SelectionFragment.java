@@ -81,11 +81,11 @@ public class SelectionFragment extends Fragment {
 
     private void Profile() {
         LoggedInActivity parent = (LoggedInActivity) getActivity();
-        parent.changeFragment("Profile");
+        parent.changeActivity("Profile");
     }
 
     private void Hotel() {
         LoggedInActivity parent = (LoggedInActivity) getActivity();
-        parent.changeFragment("Hotels");
+        parent.changeActivity("Hotels");
     }
 }
