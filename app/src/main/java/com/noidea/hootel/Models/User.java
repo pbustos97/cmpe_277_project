@@ -12,7 +12,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 public class User {
-    protected String id;
+    protected static String id;
+    protected static String accessToken;
     protected Address address;
     protected String email;
     protected Name name;

@@ -24,6 +24,7 @@ public class SelectionFragment extends Fragment {
 
     private Button bLogout;
     private Button bProfile;
+    private Button bHotel;
 
     public SelectionFragment() {
         // Required empty public constructor
@@ -61,6 +62,13 @@ public class SelectionFragment extends Fragment {
                 Profile();
             }
         });
+        bHotel = view.findViewById(R.id.SelectionHotel);
+        bHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Hotel();
+            }
+        });
         return view;
     }
 
@@ -74,5 +82,10 @@ public class SelectionFragment extends Fragment {
     private void Profile() {
         LoggedInActivity parent = (LoggedInActivity) getActivity();
         parent.changeFragment("Profile");
+    }
+
+    private void Hotel() {
+        LoggedInActivity parent = (LoggedInActivity) getActivity();
+        parent.changeFragment("Hotels");
     }
 }

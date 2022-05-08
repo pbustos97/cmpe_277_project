@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Selection;
 
+import com.noidea.hootel.Fragments.HotelFragment;
 import com.noidea.hootel.Fragments.SelectionFragment;
 import com.noidea.hootel.Fragments.UserFragment;
+import com.noidea.hootel.Models.Hotel;
 import com.noidea.hootel.Models.User;
 
 public class LoggedInActivity extends AppCompatActivity {
@@ -59,7 +61,8 @@ public class LoggedInActivity extends AppCompatActivity {
         } else if (fragment.equals("Selection")) {
             addFragment(R.id.main_container, SelectionFragment.class, bundle);
         } else if (fragment.equals("Hotels")) {
-            // Choose Hotel List Fragment
+            bundle.putString("hotels", Hotel.getHotelList(getString(R.string.api_hotel)));
+            addFragment(R.id.main_container, HotelFragment.class, bundle);
         } else if (fragment.equals("Reservations")) {
             // Choose Reservations Fragment
         } else {
