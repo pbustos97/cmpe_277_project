@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,8 +34,6 @@ public class RoomActivity extends AppCompatActivity {
                 bundle.putString("roomPrice", b.getString("roomPrice"));
                 bundle.putString("roomName", b.getString("roomName"));
                 bundle.putString("roomType", b.getString("roomType"));
-                bundle.putString("userId", b.getString("userId"));
-                Log.d("RoomActivty", "UserId -->" + b.getString("userId"));
                 Intent intent = new Intent(RoomActivity.this, BookActivity.class);
                 intent.putExtras(bundle);
                 onPause();

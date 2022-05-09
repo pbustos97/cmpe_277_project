@@ -109,7 +109,7 @@ public class RoomFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), RoomActivity.class);
                 intent.putExtras(bundle);
                 onPause();
-                startActivity(intent);
+                startActivity(intent, bundle);
             }
         });
         return view;
