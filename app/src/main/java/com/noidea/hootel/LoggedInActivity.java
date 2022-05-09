@@ -6,15 +6,24 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Selection;
+import android.util.Log;
 
 import com.noidea.hootel.Fragments.HotelFragment;
 import com.noidea.hootel.Fragments.SelectionFragment;
 import com.noidea.hootel.Fragments.UserFragment;
+import com.noidea.hootel.Models.Booking;
 import com.noidea.hootel.Models.Hotel;
 import com.noidea.hootel.Models.Reservation;
 import com.noidea.hootel.Models.User;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class LoggedInActivity extends AppCompatActivity {
+    private static final String TAG = LoggedInActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +83,26 @@ public class LoggedInActivity extends AppCompatActivity {
             addFragment(R.id.main_container, UserReservationFragment.class, bundle);
         } else {
             loggedIn();
+        }
+    }
+
+    public void changeActivity(String activity) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(getApplicationContext(), UIActivity.class);
+        if (activity.equals("Profile")) {
+            intent.putExtra("fragment", "profile");
+            intent.putExtra("accessToken", User.getToken());
+            startActivity(intent, bundle);
+        } else if (activity.equals("Hotels")) {
+            intent.putExtra("fragment", "hotels");
+            intent.putExtra("accessToken", User.getToken());
+            startActivity(intent, bundle);
+        } else if (activity.equals("Reservations")) {
+            intent.putExtra("fragment", "reservations");
+            intent.putExtra("userId", User.getUserId());
+            intent.putExtra("reservationList", Reservation.getReservationByuserId(User.getUserId()));
+            intent.putExtra("accessToken", User.getToken());
+            startActivity(intent);
         }
     }
 }

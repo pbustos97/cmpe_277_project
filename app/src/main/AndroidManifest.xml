@@ -32,6 +32,9 @@
             android:name=".HotelActivity"
             android:exported="false" />
         <activity
+            android:name=".UIActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
