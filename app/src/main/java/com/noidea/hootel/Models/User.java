@@ -98,7 +98,7 @@ public class User {
     }
 
     public static void setToken(String token) {
-        accessToken = id;
+        accessToken = token;
     }
 
     public static String getToken() { return accessToken; }
