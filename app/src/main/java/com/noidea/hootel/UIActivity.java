@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.noidea.hootel.Fragments.HotelFragment;
 import com.noidea.hootel.Fragments.ReservationFragment;
 import com.noidea.hootel.Fragments.UserFragment;
+import com.noidea.hootel.Models.Branch;
 import com.noidea.hootel.Models.Hotel;
 import com.noidea.hootel.Models.Reservation;
 import com.noidea.hootel.Models.User;
@@ -34,6 +35,7 @@ public class UIActivity extends AppCompatActivity {
             addFragment(R.id.main_container, UserFragment.class, bundle);
         } else if (fragment.equals("hotels")) {
             bundle.putString("hotels", Hotel.getHotelList(getString(R.string.api_hotel)));
+            bundle.putString("branches", Branch.getBranchList(getString(R.string.api_hotel)));
             addFragment(R.id.main_container, HotelFragment.class, bundle);
         } else if (fragment.equals("reservations")) {
             bundle.putString("reservationList", getIntent().getStringExtra("reservationList"));

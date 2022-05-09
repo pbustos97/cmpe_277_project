@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.noidea.hootel.BranchListAdapter;
 import com.noidea.hootel.HotelActivity;
 import com.noidea.hootel.HotelListAdapter;
 import com.noidea.hootel.Models.Helpers.Address;
@@ -64,6 +65,8 @@ public class HotelFragment extends Fragment {
         if (getArguments() != null) {
             String hotelStr = getArguments().getString(ARG_PARAM1);
             String branchStr = getArguments().getString(ARG_PARAM2);
+            Log.d(TAG, "hotelStr: ".concat(hotelStr));
+            Log.d(TAG, "branchStr: ".concat(branchStr));
 
             try {
                 Thread t = new Thread(new Runnable() {
@@ -80,6 +83,23 @@ public class HotelFragment extends Fragment {
                                 String name = obj.getString("HotelName");
                                 String ownerId = obj.getString("ownerId");
                                 hotels.add(new Hotel(hotelId, address, email, name, ownerId));
+                            }
+                            JSONObject hotelsObj = new JSONObject(branchStr);
+                            for (int i = 0; i < hotels.size(); i++) {
+                                String hotelId = hotels.get(i).getHotelId();
+//                                Log.d(TAG, "branch hotelId: ".concat(hotelId));
+                                arr = new JSONArray(hotelsObj.getString(hotelId));
+                                for (int j = 0; j < arr.length(); j++) {
+                                    JSONObject obj = arr.getJSONObject(j);
+                                    Address address = new Address(obj.getString("Address"),
+                                            obj.getString("Country"));
+                                    String branchId = obj.getString("branchId");
+                                    String branchName = obj.getString("BranchName");
+                                    String branchEmail = obj.getString("email");
+                                    String ownerId = obj.getString("ownerId");
+                                    branches.add(new Branch(branchId, hotelId, branchEmail, branchName, address, ownerId));
+//                                    Log.d(TAG, hotelId.concat(" added ").concat(branchId));
+                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -103,7 +123,7 @@ public class HotelFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hotel, container, false);
 
-        HotelListAdapter listAdapter = new HotelListAdapter(getContext(), hotels);
+        BranchListAdapter listAdapter = new BranchListAdapter(getContext(), branches);
         hotelList = view.findViewById(R.id.HotelListView);
         hotelList.setAdapter(listAdapter);
         hotelList.setClickable(true);
@@ -112,12 +132,13 @@ public class HotelFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 Log.d(TAG, "select item: " + pos);
                 Intent intent = new Intent(getActivity(), HotelActivity.class);
-                Hotel hotel = hotels.get(pos);
-                Log.d(TAG, "hotel: " + hotel.getHotelId());
-                intent.putExtra("hotelId", hotel.getHotelId());
-                intent.putExtra("hotelName", hotel.getName());
-                intent.putExtra("hotelAddress", hotel.getAddress());
-                intent.putExtra("hotelEmail", hotel.getEmail());
+                Branch branch = branches.get(pos);
+                Log.d(TAG, "branch: " + branch.getHotelId());
+                intent.putExtra("hotelId", branch.getHotelId());
+                intent.putExtra("branchId", branch.getBranchId());
+                intent.putExtra("hotelName", branch.getName());
+                intent.putExtra("hotelAddress", branch.getAddress());
+                intent.putExtra("hotelEmail", branch.getEmail());
                 intent.putExtra("userId", getArguments().getString(ARG_PARAM3));
                 intent.putExtra("accessToken", getArguments().getString(ARG_PARAM4));
                 startActivity(intent);

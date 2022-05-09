@@ -142,7 +142,7 @@ public class UserReservationFragment extends Fragment{
                 bundle.putString("custmoerLastName", reservation.getCustmoerFirstName() + " " + reservation.getCustmoerLastName());
                 bundle.putString("startDate", reservation.getStartDate());
                 bundle.putString("endDate", reservation.getEndDate());
-                bundle.putString("Address", branch.getAddress().getAddress());
+                bundle.putString("Address", branch.getAddress());
                 bundle.putString("price", reservation.getPrice());
                 bundle.putString("email", branch.getEmail());
                 bundle.putString("reservationId", reservation.getReservationId());

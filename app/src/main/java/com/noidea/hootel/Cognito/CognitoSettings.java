@@ -43,8 +43,8 @@ public class CognitoSettings {
         authenticationHandler = new AuthenticationHandler() {
             @Override
             public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
-                Log.d(TAG, userSession.getAccessToken().getJWTToken());
-                User.setToken(userSession.getAccessToken().getJWTToken());
+                Log.d(TAG, userSession.getIdToken().getJWTToken());
+                User.setToken(userSession.getIdToken().getJWTToken());
             }
 
             @Override
