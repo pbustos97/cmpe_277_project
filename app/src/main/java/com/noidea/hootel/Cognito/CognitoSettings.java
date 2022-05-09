@@ -35,16 +35,18 @@ public class CognitoSettings {
 
     public CognitoSettings(Context ctx) {
         this.context = ctx;
-        userPoolId = ctx.getResources().getString(R.string.userPoolId);
-        clientId = ctx.getResources().getString(R.string.clientId);
-        clientSecret = ctx.getResources().getString(R.string.clientSecret);
+        userPoolId = "us-west-2_QIwRmEuzt";
+        clientId = "7o9ehqd2u5ars02an5ajg08jaf";
+        clientSecret = "qufi54a043ghgct19mcrn0qs3trr9o5peiek0aq534menvsa0qa";
         cognitoUserPool = new CognitoUserPool(this.context, this.userPoolId, this.clientId, this.clientSecret, this.cognitoRegion);
         cognitoUserAttributes = new CognitoUserAttributes();
         authenticationHandler = new AuthenticationHandler() {
             @Override
             public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
-                Log.d(TAG, userSession.getAccessToken().getJWTToken());
-                User.setToken(userSession.getAccessToken().getJWTToken());
+                Log.d(TAG, userSession.getIdToken().getJWTToken());
+                User.setToken(userSession.getIdToken().getJWTToken());
+                User.setUserPoolId(userPoolId);
+
             }
 
             @Override

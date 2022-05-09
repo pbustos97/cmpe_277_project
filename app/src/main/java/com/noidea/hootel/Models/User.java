@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 public class User {
     protected static String id;
     protected static String accessToken;
+    protected static String userPoolId;
     protected Address address;
     protected String email;
     protected Name name;
@@ -33,6 +34,22 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public static String getAccessToken() {
+        return accessToken;
+    }
+
+    public static void setAccessToken(String accessToken) {
+        User.accessToken = accessToken;
+    }
+
+    public static String getUserPoolId() {
+        return userPoolId;
+    }
+
+    public static void setUserPoolId(String userPoolId) {
+        User.userPoolId = userPoolId;
     }
 
     public Address getAddress() {
