@@ -11,6 +11,7 @@ import com.noidea.hootel.Fragments.HotelFragment;
 import com.noidea.hootel.Fragments.ReservationFragment;
 import com.noidea.hootel.Fragments.UserFragment;
 import com.noidea.hootel.Models.Hotel;
+import com.noidea.hootel.Models.Reservation;
 import com.noidea.hootel.Models.User;
 
 public class UIActivity extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class UIActivity extends AppCompatActivity {
             bundle.putString("hotels", Hotel.getHotelList(getString(R.string.api_hotel)));
             addFragment(R.id.main_container, HotelFragment.class, bundle);
         } else if (fragment.equals("reservations")) {
+            bundle.putString("reservationList", getIntent().getStringExtra("reservationList"));
             addFragment(R.id.main_container, UserReservationFragment.class, bundle);
         } else {
             Log.e(TAG, "invalid fragment input: ".concat(fragment));

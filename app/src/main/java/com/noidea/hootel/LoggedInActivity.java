@@ -91,13 +91,17 @@ public class LoggedInActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), UIActivity.class);
         if (activity.equals("Profile")) {
             intent.putExtra("fragment", "profile");
+            intent.putExtra("accessToken", User.getToken());
             startActivity(intent, bundle);
         } else if (activity.equals("Hotels")) {
             intent.putExtra("fragment", "hotels");
+            intent.putExtra("accessToken", User.getToken());
             startActivity(intent, bundle);
         } else if (activity.equals("Reservations")) {
             intent.putExtra("fragment", "reservations");
             intent.putExtra("userId", User.getUserId());
+            intent.putExtra("reservationList", Reservation.getReservationByuserId(User.getUserId()));
+            intent.putExtra("accessToken", User.getToken());
             startActivity(intent);
         }
     }
