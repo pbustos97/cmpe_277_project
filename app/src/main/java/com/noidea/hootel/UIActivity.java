@@ -35,7 +35,7 @@ public class UIActivity extends AppCompatActivity {
             bundle.putString("hotels", Hotel.getHotelList(getString(R.string.api_hotel)));
             addFragment(R.id.main_container, HotelFragment.class, bundle);
         } else if (fragment.equals("reservations")) {
-            addFragment(R.id.main_container, ReservationFragment.class, bundle);
+            addFragment(R.id.main_container, UserReservationFragment.class, bundle);
         } else {
             Log.e(TAG, "invalid fragment input: ".concat(fragment));
         }
