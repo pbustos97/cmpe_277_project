@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class RoomActivity extends AppCompatActivity {
-
+    private static final String TAG = RoomActivity.class.getSimpleName();
+    private String name;
+    private String price;
+    private String type;
     TextView roomName;
     TextView roomPrice;
     TextView roomType;
@@ -26,6 +30,9 @@ public class RoomActivity extends AppCompatActivity {
         roomPrice.setText(b.getString("roomPrice"));
         roomName.setText(b.getString("roomName"));
         roomType.setText(b.getString("roomType"));
+        this.name = b.getString("roomName");
+        this.price = b.getString("roomPrice");
+        this.type = b.getString("roomType");
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,11 +41,23 @@ public class RoomActivity extends AppCompatActivity {
                 bundle.putString("roomPrice", b.getString("roomPrice"));
                 bundle.putString("roomName", b.getString("roomName"));
                 bundle.putString("roomType", b.getString("roomType"));
+                Log.d(TAG, "roomId: ".concat(bundle.getString("roomId")));
+                Log.d(TAG, "roomPrice: ".concat(bundle.getString("roomPrice")));
+                Log.d(TAG, "roomName: ".concat(bundle.getString("roomName")));
+                Log.d(TAG, "roomType: ".concat(bundle.getString("roomType")));
                 Intent intent = new Intent(RoomActivity.this, BookActivity.class);
                 intent.putExtras(bundle);
                 onPause();
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        roomName.setText(name);
+        roomPrice.setText(price);
+        roomType.setText(type);
     }
 }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.noidea.hootel.Fragments.LoginFragment;
 import com.noidea.hootel.Models.Hotel;
@@ -28,6 +29,7 @@ public class HotelActivity extends AppCompatActivity {
     private TextView textViewHotelName;
     private TextView textViewHotelAddress;
     private Button bCreateBooking;
+    private Button bContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class HotelActivity extends AppCompatActivity {
         textViewHotelName = findViewById(R.id.HotelActivityName);
         textViewHotelAddress = findViewById(R.id.HotelActivityAddress);
         bCreateBooking = findViewById(R.id.HotelActivityButtonBook);
+        bContact = findViewById(R.id.HotelActivityButtonTwo);
 
         textViewHotelName.setText(hotelName);
         textViewHotelAddress.setText(hotelAddress);
@@ -61,6 +64,13 @@ public class HotelActivity extends AppCompatActivity {
                 RoomFragment roomFragment = new RoomFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.hotel_container, roomFragment).commit();
+            }
+        });
+
+        bContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "contact@hootel.com", Toast.LENGTH_LONG).show();
             }
         });
     }
