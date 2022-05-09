@@ -68,7 +68,7 @@ public class Room {
     @Override
     public String toString() {
        StringBuilder sb = new StringBuilder();
-       sb.append("Room Name: ").append(getRoomName()).append(", ").append("Room Type: ").append(getRoomType()).append("");
+       sb.append("Room Name: ").append(getRoomName()).append(", ").append("Room Type: ").append(getRoomType()).append("Room price: ").append(getPrice());
        return sb.toString();
     }
 

@@ -43,7 +43,8 @@ public class UserReservationFragment extends Fragment{
     private final String TAG = UserReservationFragment.class.getSimpleName();
 
     private static final String ARG_PARAM1 = "userId";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM2 = "reservationList";
+    private static final String ARG_PARAM3 = "accessToken";
 
     private String userId;
     private JSONArray reservations;
@@ -64,26 +65,30 @@ public class UserReservationFragment extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        reservationList = new ArrayList<>();
         if (getArguments() != null) {
             userId = getArguments().getString(ARG_PARAM1);
+            String reservationArr = getArguments().getString(ARG_PARAM2);
+            try {
+                reservations = new JSONArray(reservationArr);
+                for (int index = 0; index < reservations.length(); index++) {
+                    JSONObject reservation = reservations.getJSONObject(index);
+                    String reservationId = reservation.getString("reservationId");
+                    Reservation reservation1 = Reservation.getReservation(reservationId, "https://5mbz63m677.execute-api.us-west-2.amazonaws.com/prod/");
+                    reservationList.add(reservation1);
+                }
+            } catch (JSONException | ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-        }
-        String param = "userId=".concat(userId);
-        String url = "https://5mbz63m677.execute-api.us-west-2.amazonaws.com/prod/reservationInfo?".concat(param);
-        try {
-            reservations = new getJSONArray().execute(url).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        reservationList = new ArrayList<>();
+
         ReservationAdaper reservationAdaper = new ReservationAdaper(getActivity(), R.layout.reservaion_list, reservationList);
         View view = inflater.inflate(R.layout.fragment_user_reservation, container, false);
         ListView listView = view.findViewById(R.id.list_view);
@@ -129,9 +134,7 @@ public class UserReservationFragment extends Fragment{
                         Room room = Room.getRoom(roomId, "https://nua5fhfin1.execute-api.us-west-2.amazonaws.com/prod/");
                         roomInfo.add(room.toString());
                     }
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
 
@@ -145,6 +148,8 @@ public class UserReservationFragment extends Fragment{
                 bundle.putString("reservationId", reservation.getReservationId());
                 bundle.putStringArrayList("bookingInfo", roomInfo);
                 bundle.putString("status", reservation.getReservationStatus());
+                bundle.putString("userId", getArguments().getString(ARG_PARAM1));
+                bundle.putString("accessToken", getArguments().getString(ARG_PARAM3));
                 Intent intent = new Intent(getActivity(),ReservationActivity.class);
                 intent.putExtras(bundle);
                 onPause();

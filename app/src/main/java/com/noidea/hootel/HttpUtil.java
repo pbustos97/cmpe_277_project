@@ -98,7 +98,7 @@ public class HttpUtil extends Thread {
         return new JSONArray(jsonString);
     }
 
-    public static JSONObject sendRequest(String endpoint, String Method, String Json) throws JSONException {
+    public static JSONObject sendRequest(String endpoint, String Method, String Json, String accessToken) throws JSONException {
         BufferedReader reader = null;
         String result = "";
 
@@ -116,7 +116,9 @@ public class HttpUtil extends Thread {
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("Charset", "UTF-8");
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("Accept", "*/*");
+            connection.setRequestProperty("Authorization", accessToken);
+            Log.d("RestHelper", "accessToken->" + accessToken);
             if (Json != null && !TextUtils.isEmpty(Json)) {
                 connection.setRequestProperty("Content-Length", String.valueOf(Json.length()));
                 OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
