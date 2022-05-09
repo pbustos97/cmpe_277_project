@@ -1,14 +1,19 @@
 package com.noidea.hootel.Models;
 
+import android.util.Log;
+
+import com.noidea.hootel.HttpUtilSingle;
 import com.noidea.hootel.getJSONObj;
 
 import com.noidea.hootel.Models.Helpers.Address;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
 public class Branch {
+    private static final String TAG = Branch.class.getSimpleName();
     private String branchId;
     private String hotelId;
     private String email;
@@ -66,8 +71,8 @@ public class Branch {
         this.name = name;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getAddress() {
+        return address.getFullAddress();
     }
 
     public void setAddress(Address address) {
@@ -99,6 +104,32 @@ public class Branch {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getBranchList(String endpoint) {
+        final String[] msg = {null};
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = endpoint.concat("branch-get?hotelId=-1&branchId=-1");
+                try {
+                    JSONObject obj = HttpUtilSingle.getJSON(url);
+                    Log.d(TAG, obj.toString());
+                    JSONObject arr = obj.getJSONObject("branches");
+                    Log.d(TAG, arr.toString());
+                    msg[0] = arr.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msg[0];
     }
 }
 
