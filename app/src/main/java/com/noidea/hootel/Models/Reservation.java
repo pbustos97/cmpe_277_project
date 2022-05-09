@@ -2,6 +2,7 @@ package com.noidea.hootel.Models;
 
 import androidx.annotation.NonNull;
 
+import com.noidea.hootel.getJSONArray;
 import com.noidea.hootel.getJSONObj;
 
 import org.json.JSONArray;
@@ -229,4 +230,19 @@ public class Reservation implements Serializable {
             roomIds.add(roomId);
         }
     }
+    public static String getReservationByuserId(String userId) {
+        JSONArray reservationArr = null;
+        String[] res = new String[1];
+        String param = "userId=".concat(userId);
+        String url = "https://5mbz63m677.execute-api.us-west-2.amazonaws.com/prod/reservationInfo?".concat(param);
+        try {
+            reservationArr = new getJSONArray().execute(url).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        res[0] = reservationArr.toString();
+        return res[0];
+    }
+
 }

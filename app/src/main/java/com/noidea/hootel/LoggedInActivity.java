@@ -11,6 +11,7 @@ import com.noidea.hootel.Fragments.HotelFragment;
 import com.noidea.hootel.Fragments.SelectionFragment;
 import com.noidea.hootel.Fragments.UserFragment;
 import com.noidea.hootel.Models.Hotel;
+import com.noidea.hootel.Models.Reservation;
 import com.noidea.hootel.Models.User;
 
 public class LoggedInActivity extends AppCompatActivity {
@@ -62,9 +63,15 @@ public class LoggedInActivity extends AppCompatActivity {
             addFragment(R.id.main_container, SelectionFragment.class, bundle);
         } else if (fragment.equals("Hotels")) {
             bundle.putString("hotels", Hotel.getHotelList(getString(R.string.api_hotel)));
+            bundle.putString("accessToken", User.getToken());
+            bundle.putString("userId", User.getUserId());
             addFragment(R.id.main_container, HotelFragment.class, bundle);
         } else if (fragment.equals("Reservations")) {
             // Choose Reservations Fragment
+            bundle.putString("userId", User.getUserId());
+            bundle.putString("reservationList", Reservation.getReservationByuserId(User.getUserId()));
+            bundle.putString("accessToken", User.getToken());
+            addFragment(R.id.main_container, UserReservationFragment.class, bundle);
         } else {
             loggedIn();
         }

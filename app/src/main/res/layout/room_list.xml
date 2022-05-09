@@ -1,0 +1,20 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFF"
+    android:gravity="left"
+    tools:ignore="RtlHardcoded">
+
+    <TextView
+        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:text="+16"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:id="@+id/room_item"
+        android:textStyle="bold"
+        android:gravity="center"/>
+</LinearLayout>

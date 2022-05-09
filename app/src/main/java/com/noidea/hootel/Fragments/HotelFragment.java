@@ -34,6 +34,8 @@ public class HotelFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "hotels";
     private static final String ARG_PARAM2 = "branches";
+    private static final String ARG_PARAM3 = "userId";
+    private static final String ARG_PARAM4 = "accessToken";
 
     private ArrayList<Hotel> hotels;
     private ArrayList<Branch> branches;
@@ -100,10 +102,11 @@ public class HotelFragment extends Fragment {
                 Hotel hotel = hotels.get(pos);
                 Log.d(TAG, "hotel: " + hotel.getHotelId());
                 intent.putExtra("hotelId", hotel.getHotelId());
-                intent.putExtra("userId", "user001");
                 intent.putExtra("hotelName", hotel.getName());
                 intent.putExtra("hotelAddress", hotel.getAddress());
                 intent.putExtra("hotelEmail", hotel.getEmail());
+                intent.putExtra("userId", getArguments().getString(ARG_PARAM3));
+                intent.putExtra("accessToken", getArguments().getString(ARG_PARAM4));
                 startActivity(intent);
             }
         });

@@ -14,7 +14,7 @@ public class getJSONObj extends AsyncTask<String, Void, JSONObject> {
     HttpURLConnection urlConnection = null;
     BufferedReader reader = null;
     String resultJson = "";
-    JSONObject user = null;
+    JSONObject res = null;
     @Override
     protected JSONObject doInBackground(String... param) {
         try {
@@ -33,11 +33,11 @@ public class getJSONObj extends AsyncTask<String, Void, JSONObject> {
                 buffer.append(line);
             }
             resultJson = buffer.toString();
-            user = new JSONObject(resultJson);
+            res = new JSONObject(resultJson);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return user;
+        return res;
     }
 
 }

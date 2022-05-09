@@ -32,6 +32,8 @@ public class ReservationActivity extends AppCompatActivity {
     TextView OrderStatus;
     Button cancelBtn;
     String reservationId;
+    String userId;
+    String accessToken;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class ReservationActivity extends AppCompatActivity {
         custmoerName.setText(b.getString("custmoerLastName"));
         checkInDate.setText(b.getString("startDate"));
         checkoutDate.setText(b.getString("endDate"));
+        userId = b.getString("userId");
+        accessToken = b.getString("accessToken");
         BookingInfo.setText(bookingin);
         HotelInfo.setText(hotelin);
         OrderStatus.setText(b.getString("status"));
@@ -62,7 +66,7 @@ public class ReservationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String[] statusCode = {""};
                 new Thread(new Runnable() {
-                    String url = getApplicationContext().getString(R.string.api_booking) + "cancel?reservationId=".concat(reservationId);
+                    String url = getApplicationContext().getString(R.string.api_booking) + "cancel";
                     String body = "{\n" +
                             "  \"body\": {\n" +
                             "    \"reservationId\": " + "\"" + reservationId + "\""+
@@ -71,7 +75,7 @@ public class ReservationActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            JSONObject res = HttpUtil.sendRequest(url, "PATCH", body);
+                            JSONObject res = HttpUtil.sendRequest(url, "PATCH", body, accessToken);
                             statusCode[0] = res.getString("statusCode");
                             Log.d(TAG, statusCode[0]);
                         } catch (JSONException e) {
