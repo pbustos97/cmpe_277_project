@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +19,8 @@ import com.noidea.hootel.MainActivity;
 import com.noidea.hootel.Models.User;
 import com.noidea.hootel.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LoginFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = LoginFragment.class.getSimpleName();
 
     private EditText loginField;
     private EditText passwordField;
@@ -48,8 +40,6 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -82,19 +72,18 @@ public class LoginFragment extends Fragment {
     }
 
     public void loginAccount() {
-        CognitoSettings cognitoSettings = new CognitoSettings(this.getContext());
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                cognitoSettings.login(loginField.getText().toString().replace(" ", ""), passwordField.getText().toString());
-            }
-        });
-        thread.start();
         try {
-           thread.join();
-
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    CognitoSettings cognitoSettings = new CognitoSettings(getContext());
+                    cognitoSettings.login(loginField.getText().toString().replace(" ", ""), passwordField.getText().toString());
+                }
+            });
+            thread.start();
+            thread.join();
         } catch (Exception e) {
+            Log.e(TAG, "Error getting cognito JWT");
             e.printStackTrace();
         }
         if (User.isLoggedIn()) {
