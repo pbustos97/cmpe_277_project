@@ -38,6 +38,7 @@ public class CognitoSettings {
         userPoolId = ctx.getResources().getString(R.string.userPoolId);
         clientId = ctx.getResources().getString(R.string.clientId);
         clientSecret = ctx.getResources().getString(R.string.clientSecret);
+
         cognitoUserPool = new CognitoUserPool(this.context, this.userPoolId, this.clientId, this.clientSecret, this.cognitoRegion);
         cognitoUserAttributes = new CognitoUserAttributes();
         authenticationHandler = new AuthenticationHandler() {

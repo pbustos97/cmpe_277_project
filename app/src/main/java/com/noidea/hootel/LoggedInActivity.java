@@ -97,11 +97,14 @@ public class LoggedInActivity extends AppCompatActivity {
             startActivity(intent, bundle);
         } else if (activity.equals("Hotels")) {
             intent.putExtra("fragment", "hotels");
+            intent.putExtra("userId", User.getUserId());
+            Log.d(TAG, User.getUserId());
             intent.putExtra("accessToken", User.getToken());
             startActivity(intent, bundle);
         } else if (activity.equals("Reservations")) {
             intent.putExtra("fragment", "reservations");
             intent.putExtra("userId", User.getUserId());
+            Log.d(TAG, User.getUserId());
             intent.putExtra("reservationList", Reservation.getReservationByuserId(User.getUserId()));
             intent.putExtra("accessToken", User.getToken());
             startActivity(intent);

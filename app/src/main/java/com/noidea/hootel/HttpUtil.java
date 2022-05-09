@@ -132,10 +132,8 @@ public class HttpUtil extends Thread {
                 reader = new BufferedReader(
                         new InputStreamReader(connection.getInputStream()));
                 result = reader.readLine();
-                connection.disconnect();
-                Log.d("RestHelper", "result: " + result);
-
             }
+            Log.d("RestHelper", "result: " + result);
         } catch (IOException e) {
             Log.e("RestHelper", "getJSON error: " + e.getMessage());
             e.printStackTrace();
