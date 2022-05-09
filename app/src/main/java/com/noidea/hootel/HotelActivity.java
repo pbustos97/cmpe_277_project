@@ -38,6 +38,7 @@ public class HotelActivity extends AppCompatActivity {
             Intent intent = getIntent();
             hotelId = intent.getStringExtra("hotelId");
             userId = intent.getStringExtra("userId");
+            Log.d("HotelActivity", "UserId : " + userId);
             hotelName = intent.getStringExtra("hotelName");
             hotelAddress = intent.getStringExtra("hotelAddress");
             hotelEmail = intent.getStringExtra("hotelEmail");
@@ -59,6 +60,7 @@ public class HotelActivity extends AppCompatActivity {
                 bundle.putString("userId", userId);
                 bundle.putString("accessToken", accessToken);
                 RoomFragment roomFragment = new RoomFragment();
+                roomFragment.setArguments(bundle);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.hotel_container, roomFragment).commit();
             }

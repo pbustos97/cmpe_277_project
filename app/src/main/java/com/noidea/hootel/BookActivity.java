@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.noidea.hootel.Models.Reservation;
+import com.noidea.hootel.Models.User;
 import com.noidea.hootel.Models.myRequest;
 
 import org.json.JSONException;
@@ -44,6 +45,7 @@ public class BookActivity extends AppCompatActivity {
 
         Bundle b= getIntent().getExtras();
         String roomId = b.getString("roomId");
+        String userId = b.getString("userId");
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -52,7 +54,7 @@ public class BookActivity extends AppCompatActivity {
                 String startdate = checkIn.getText().toString();
                 String enddate = checkOut.getText().toString();
                 String url = "https://5mbz63m677.execute-api.us-west-2.amazonaws.com/prod/booking";
-                String body = getRequestBody(roomId, startdate, enddate);
+                String body = getRequestBody(userId, roomId, startdate, enddate);
                 myRequest myrequest = new myRequest(url, body);
                 try {
                     JSONObject bookResponse = new sendRequest().execute(myrequest).get();
@@ -78,11 +80,11 @@ public class BookActivity extends AppCompatActivity {
             }
         });
     }
-    private String getRequestBody(String roomId, String startDate, String enddate) {
-
+    private String getRequestBody(String userId, String roomId, String startDate, String enddate) {
+        Log.d("BookActivity", "UserId is ---> " + userId);
         String body = "{\n" +
                 "  \"body\": {\n" +
-                "    \"userId\": \"user005\",\n" +
+                "    \"userId\":" + "\"" + userId + "\",\n" +
                 "    \"branchId\" : \"cb464e63-c36e-4669-8c7c-3436ce4754ff\",\n" +
                 "    \"room\": [\n" +
                 "      {\n" +

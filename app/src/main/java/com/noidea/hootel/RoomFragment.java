@@ -27,12 +27,11 @@ import java.util.concurrent.ExecutionException;
 
 public class RoomFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "userId";
     private static final String ARG_PARAM2 = "param2";
     private final String TAG = RoomFragment.class.getSimpleName();
 
-    private String mParam1;
-    private String mParam2;
+    private String userId;
     private Button reshRoom;
     private JSONArray rooms;
     private List<Room> roomList;
@@ -53,8 +52,7 @@ public class RoomFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            userId = getArguments().getString(ARG_PARAM1);
         }
         String url = "https://nua5fhfin1.execute-api.us-west-2.amazonaws.com/prod/allroomInfo";
         try {
@@ -102,6 +100,8 @@ public class RoomFragment extends Fragment {
                 String roomType = room.getRoomType();
                 String roomName = room.getRoomName();
                 Bundle bundle = new Bundle();
+                bundle.putString("userId", userId);
+                Log.d(TAG, "userId -->" + userId);
                 bundle.putString("roomId", roomId);
                 bundle.putString("roomPrice", roomPrice);
                 bundle.putString("roomType", roomType);
