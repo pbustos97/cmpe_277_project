@@ -50,6 +50,7 @@ public class HttpUtil extends Thread {
                 sb.append(line);
             }
             br.close();
+            connection.disconnect();
 
             jsonString = sb.toString();
             Log.d("RestHelper", "getJSON jsonString: " + jsonString);
@@ -85,6 +86,7 @@ public class HttpUtil extends Thread {
                 sb.append(line);
             }
             br.close();
+            connection.disconnect();
 
             jsonString = sb.toString();
             Log.d("RestHelper", "getJSON jsonString: " + jsonString);

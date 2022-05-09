@@ -66,20 +66,33 @@ public class HotelFragment extends Fragment {
             String branchStr = getArguments().getString(ARG_PARAM2);
 
             try {
-                JSONArray arr = new JSONArray(hotelStr);
-                for (int i = 0; i < arr.length(); i++) {
-                    JSONObject obj = arr.getJSONObject(i);
-                    String hotelId = obj.getString("hotelId");
-                    Address address = new Address(obj.getString("Address"),
-                                                  obj.getString("Country"));
-                    String email = obj.getString("email");
-                    String name = obj.getString("HotelName");
-                    String ownerId = obj.getString("ownerId");
-                    hotels.add(new Hotel(hotelId, address, email, name, ownerId));
-                }
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONArray arr = new JSONArray(hotelStr);
+                            for (int i = 0; i < arr.length(); i++) {
+                                JSONObject obj = arr.getJSONObject(i);
+                                String hotelId = obj.getString("hotelId");
+                                Address address = new Address(obj.getString("Address"),
+                                        obj.getString("Country"));
+                                String email = obj.getString("email");
+                                String name = obj.getString("HotelName");
+                                String ownerId = obj.getString("ownerId");
+                                hotels.add(new Hotel(hotelId, address, email, name, ownerId));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                t.start();
+                t.join();
             } catch (Exception e) {
+                Log.e(TAG, "Error getting hotel list");
                 e.printStackTrace();
             }
+
         } else {
             return;
         }
