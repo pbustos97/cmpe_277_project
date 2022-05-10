@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Bundle bundle = new Bundle();
-        bundle.putString("userId", "user005");
-        bundle.putString("hotelId", "hotel001");
         bundle.putString("hotels", Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel)));
         this.addFragment(R.id.main_container, LoginFragment.class, bundle);
 

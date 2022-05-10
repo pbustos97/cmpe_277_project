@@ -1,6 +1,7 @@
 package com.noidea.hootel.Fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -61,7 +62,10 @@ public class LoginFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerAccount();
+
+                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("https://main.d2pqi8z5jyvu7o.amplifyapp.com/customer"));
+                startActivity(intent);
+
             }
         });
         return view;
