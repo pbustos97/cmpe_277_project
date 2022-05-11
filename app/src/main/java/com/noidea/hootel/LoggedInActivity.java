@@ -105,7 +105,7 @@ public class LoggedInActivity extends AppCompatActivity {
             intent.putExtra("fragment", "reservations");
             intent.putExtra("userId", User.getUserId());
             Log.d(TAG, User.getUserId());
-            intent.putExtra("reservationList", Reservation.getReservationByuserId(User.getUserId()));
+//            intent.putExtra("reservationList", Reservation.getReservationByuserId(User.getUserId()));
             intent.putExtra("accessToken", User.getToken());
             startActivity(intent);
         }
