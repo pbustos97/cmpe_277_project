@@ -1,6 +1,10 @@
 package com.noidea.hootel.Models;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.noidea.hootel.getJSONArray;
 import com.noidea.hootel.getJSONObj;
@@ -13,24 +17,44 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
+@Entity(tableName = "reservationTable")
 public class Reservation implements Serializable {
+    @PrimaryKey
+    @NonNull
     private String reservationId;
+
+    @ColumnInfo(name = "price")
     private String price;
-    private User user;
-    private List<BookedRoom> bookedRoomList;
+    @ColumnInfo(name = "checkIn")
     private boolean checkIn;
+    @ColumnInfo(name = "checkOut")
     private boolean checkOut;
+    @ColumnInfo(name = "startDate")
     private String startDate;
+    @ColumnInfo(name = "endDate")
     private String endDate;
+    @ColumnInfo(name = "season")
     private String season;
+    @ColumnInfo(name = "days")
     private String days;
+    @ColumnInfo(name = "reservationStatus")
     private String reservationStatus;
+    @ColumnInfo(name = "custmoerFirstName")
     private String custmoerFirstName;
+    @ColumnInfo(name = "custmoerLastName")
     private String custmoerLastName;
+    @ColumnInfo(name = "branchId")
     private String branchId;
+    @ColumnInfo(name = "hotelId")
     private String hotelId;
+
+    @Ignore
     private List<String> roomIds;
+    @Ignore
+    private List<BookedRoom> bookedRoomList;
+    @Ignore
+    private User user;
+
     public Reservation(String reservationId, String price, User user, List<BookedRoom> bookedRoomList, boolean checkIn, boolean checkOut, String startDate, String endDate, String season, String days, String reservationStatus, String custmoerFirstName, String custmoerLastName, String branchId, String hotelId) {
         this.reservationId = reservationId;
         this.price = price;
@@ -48,6 +72,25 @@ public class Reservation implements Serializable {
         this.branchId = branchId;
         this.hotelId = hotelId;
         this.roomIds = new ArrayList<>();
+    }
+
+    public Reservation(String reservationId, String price, boolean checkIn, boolean checkOut, String startDate, String endDate, String season, String days, String reservationStatus, String custmoerFirstName, String custmoerLastName, String branchId, String hotelId) {
+        this.reservationId = reservationId;
+        this.price = price;
+        this.user = null;
+        this.bookedRoomList = null;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.season = season;
+        this.days = days;
+        this.reservationStatus = reservationStatus;
+        this.custmoerFirstName = custmoerFirstName;
+        this.custmoerLastName = custmoerLastName;
+        this.branchId = branchId;
+        this.hotelId = hotelId;
+        this.roomIds = null;
     }
 
     public String getReservationId() {

@@ -1,6 +1,12 @@
 package com.noidea.hootel.Models;
 
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.noidea.hootel.HttpUtilSingle;
 import com.noidea.hootel.getJSONObj;
 
@@ -9,25 +15,43 @@ import com.noidea.hootel.Models.Helpers.Address;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 
-public class Hotel {
+@Entity(tableName = "hotel")
+public class Hotel implements Serializable {
     private static final String TAG = Hotel.class.getSimpleName();
 
+
+    @PrimaryKey
+    @NonNull
     private String hotelId;
-    private Address address;
+
+    @ColumnInfo(name = "address")
+    private String address;
+    @ColumnInfo(name = "email")
     private String email;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "ownerId")
     private String ownerId;
 
     public Hotel(String hotelId, Address address, String email, String name) {
         this.hotelId = hotelId;
-        this.address = address;
+        this.address = address.getAddress();
         this.email = email;
         this.name = name;
         this.ownerId = null;
     }
 
     public Hotel(String hotelId, Address address, String email, String name, String ownerId) {
+        this.hotelId = hotelId;
+        this.address = address.getAddress();
+        this.email = email;
+        this.name = name;
+        this.ownerId = ownerId;
+    }
+
+    public Hotel(String hotelId, String address, String email, String name, String ownerId) {
         this.hotelId = hotelId;
         this.address = address;
         this.email = email;
@@ -95,11 +119,31 @@ public class Hotel {
     }
 
     public String getAddress() {
-        return this.address.getFullAddress();
+        return this.address;
     }
 
     public String getOwnerId() {
         return this.ownerId;
+    }
+
+    public void setHotelId(@NonNull String hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }
 

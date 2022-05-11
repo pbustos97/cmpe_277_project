@@ -2,6 +2,11 @@ package com.noidea.hootel.Models;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.noidea.hootel.HttpUtilSingle;
 import com.noidea.hootel.getJSONObj;
 
@@ -10,15 +15,25 @@ import com.noidea.hootel.Models.Helpers.Address;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
-
-public class Branch {
+@Entity(tableName = "branch")
+public class Branch implements Serializable {
     private static final String TAG = Branch.class.getSimpleName();
+
+    @NonNull
+    @PrimaryKey
     private String branchId;
+
+    @ColumnInfo(name = "hotelId")
     private String hotelId;
+    @ColumnInfo(name = "email")
     private String email;
+    @ColumnInfo(name = "name")
     private String name;
-    private Address address;
+    @ColumnInfo(name = "address")
+    private String address;
+    @ColumnInfo(name = "ownerId")
     private String ownerId;
 
     public Branch(String branchId, String hotelId, String email, String name, Address address) {
@@ -26,11 +41,19 @@ public class Branch {
         this.hotelId = hotelId;
         this.email = email;
         this.name = name;
-        this.address = address;
+        this.address = address.getAddress();
         this.ownerId = null;
     }
 
     public Branch(String branchId, String hotelId, String email, String name, Address address, String ownerId) {
+        this.branchId = branchId;
+        this.hotelId = hotelId;
+        this.email = email;
+        this.name = name;
+        this.address = address.getAddress();
+        this.ownerId = ownerId;
+    }
+    public Branch(String branchId, String hotelId, String email, String name, String address, String ownerId) {
         this.branchId = branchId;
         this.hotelId = hotelId;
         this.email = email;
@@ -72,10 +95,10 @@ public class Branch {
     }
 
     public String getAddress() {
-        return address.getFullAddress();
+        return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

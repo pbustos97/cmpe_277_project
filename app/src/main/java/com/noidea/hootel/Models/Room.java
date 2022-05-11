@@ -1,19 +1,31 @@
 package com.noidea.hootel.Models;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.noidea.hootel.getJSONObj;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
 
-public class Room {
+@Entity (tableName = "roomTable")
+public class Room implements Serializable {
+    @PrimaryKey
+    @NonNull
     private String roomId;
+
+    @ColumnInfo(name = "hotelId")
     private String hotelId;
+    @ColumnInfo(name = "roomType")
     private String roomType;
+    @ColumnInfo(name = "roomName")
     private String roomName;
+    @ColumnInfo(name = "price")
     private String price;
 
     public Room(String roomId, String hotelId, String roomType, String roomName, String price) {
