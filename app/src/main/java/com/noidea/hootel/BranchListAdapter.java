@@ -1,6 +1,7 @@
 package com.noidea.hootel;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class BranchListAdapter extends ArrayAdapter<Branch>{
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.selection_item, parent, false);
             hotelNameView = convertView.findViewById(R.id.selection_textView);
             hotelNameView.setText(branch.getName());
+            hotelNameView.setTextColor(Color.BLACK);
+            hotelNameView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
 
         // Set views on selection_item. Just Hotel Name with ID?

@@ -41,7 +41,7 @@ public class HttpUtil extends Thread {
             connection.setRequestProperty("Charset", "UTF-8");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "*/*");
-            connection.setRequestProperty("Authorization", User.getAccessToken());
+            connection.setRequestProperty("Authorization", User.getToken());
             Log.d("RestHelper", "connection created");
             connection.setRequestMethod("GET");
             Log.d("RestHelper", "set request method");
@@ -82,7 +82,7 @@ public class HttpUtil extends Thread {
             connection.setRequestProperty("Charset", "UTF-8");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "*/*");
-            connection.setRequestProperty("Authorization", User.getAccessToken());
+            connection.setRequestProperty("Authorization", User.getToken());
             Log.d("RestHelper", "connection created");
             connection.setRequestMethod("GET");
             Log.d("RestHelper", "set request method");
