@@ -102,8 +102,8 @@ public class HotelFragment extends Fragment {
                         JSONObject hotelsObj = new JSONObject(branchStr);
                         for (int i = 0; i < hotels.size(); i++) {
                             String hotelId = hotels.get(i).getHotelId();
-                            Log.d(TAG, "branch hotelId: ".concat(hotelId));
-                            Log.e(TAG, "hotelId obj: ".concat(hotelsObj.getString(hotelId)));
+//                            Log.d(TAG, "branch hotelId: ".concat(hotelId));
+//                            Log.e(TAG, "hotelId obj: ".concat(hotelsObj.getString(hotelId)));
                             if (!hotelsObj.getString(hotelId).equals("null")) {
                                 arr = new JSONArray(hotelsObj.getString(hotelId));
                                 Log.d(TAG, "branchArr: ".concat(arr.toString()));
@@ -119,48 +119,40 @@ public class HotelFragment extends Fragment {
                                 }
                             }
                         }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                View view = getView();
+                                BranchListAdapter listAdapter = new BranchListAdapter(getContext(), branches);
+                                hotelList = view.findViewById(R.id.HotelListView);
+                                hotelList.setAdapter(listAdapter);
+                                hotelList.setClickable(true);
+                                hotelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                                        Log.d(TAG, "select item: " + pos);
+                                        Intent intent = new Intent(getActivity(), HotelActivity.class);
+                                        Branch branch = branches.get(pos);
+                                        Log.d(TAG, "branch: " + branch.getHotelId());
+                                        intent.putExtra("hotelId", branch.getHotelId());
+                                        intent.putExtra("branchId", branch.getBranchId());
+                                        intent.putExtra("hotelName", branch.getName());
+                                        intent.putExtra("hotelAddress", branch.getAddress());
+                                        intent.putExtra("hotelEmail", branch.getEmail());
+                                        intent.putExtra("userId", User.getUserId());
+                                        intent.putExtra("accessToken", User.getAccessToken());
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
-
-
-
-                    View view = getView();
-                    BranchListAdapter listAdapter = new BranchListAdapter(getContext(), branches);
-                    for (int i = 0; i < branches.size(); i++) {
-                        Log.d(TAG, "branchId: ".concat(branches.get(i).getBranchId()));
-                    }
-                    hotelList = view.findViewById(R.id.HotelListView);
-                    hotelList.setAdapter(listAdapter);
-                    hotelList.setClickable(true);
                 }
             });
             t.start();
-            t.join();
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    hotelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                            Log.d(TAG, "select item: " + pos);
-                            Intent intent = new Intent(getActivity(), HotelActivity.class);
-                            Branch branch = branches.get(pos);
-                            Log.d(TAG, "branch: " + branch.getHotelId());
-                            intent.putExtra("hotelId", branch.getHotelId());
-                            intent.putExtra("branchId", branch.getBranchId());
-                            intent.putExtra("hotelName", branch.getName());
-                            intent.putExtra("hotelAddress", branch.getAddress());
-                            intent.putExtra("hotelEmail", branch.getEmail());
-                            intent.putExtra("userId", User.getUserId());
-                            intent.putExtra("accessToken", User.getAccessToken());
-                            startActivity(intent);
-                        }
-                    });
-                }
-            });
+
         } catch (Exception e) {
             Log.e(TAG, "Error getting hotel list");
             e.printStackTrace();

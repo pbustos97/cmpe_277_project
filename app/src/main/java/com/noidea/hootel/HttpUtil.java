@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.noidea.hootel.Models.User;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +37,11 @@ public class HttpUtil extends Thread {
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(10000);
             connection.setDoOutput(true);
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Charset", "UTF-8");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "*/*");
+            connection.setRequestProperty("Authorization", User.getAccessToken());
             Log.d("RestHelper", "connection created");
             connection.setRequestMethod("GET");
             Log.d("RestHelper", "set request method");
@@ -71,6 +78,11 @@ public class HttpUtil extends Thread {
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(10000);
             connection.setDoOutput(true);
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Charset", "UTF-8");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "*/*");
+            connection.setRequestProperty("Authorization", User.getAccessToken());
             Log.d("RestHelper", "connection created");
             connection.setRequestMethod("GET");
             Log.d("RestHelper", "set request method");

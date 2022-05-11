@@ -59,34 +59,6 @@ public class UserFragment extends Fragment {
         if (getArguments() != null) {
             userId = getArguments().getString(ARG_PARAM1);
         }
-
-        String role = "userId=".concat(userId);
-
-        String finalRole = role;
-        userLogin = new JSONObject[1];
-        userLoyalty = new JSONObject[1];
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    HttpUtil util = new HttpUtil(R.string.api_user, getContext());
-                    userLogin[0] = util.getJSON("user-login?".concat(finalRole));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    HttpUtil util2 = new HttpUtil(R.string.api_loyalty, getContext());
-                    userLoyalty[0] = util2.getJSON("loyalty-get?".concat(finalRole));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
     @Override
@@ -114,7 +86,37 @@ public class UserFragment extends Fragment {
             LoggedInActivity parent = (LoggedInActivity) getActivity();
             parent.changeFragment("Selection");
         }
-        refreshUser();
+
+        String role = "userId=".concat(userId);
+
+        String finalRole = role;
+        userLogin = new JSONObject[1];
+        userLoyalty = new JSONObject[1];
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        HttpUtil util = new HttpUtil(R.string.api_user, getContext());
+                        userLogin[0] = util.getJSON("user-login?".concat(finalRole));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        HttpUtil util2 = new HttpUtil(R.string.api_loyalty, getContext());
+                        userLoyalty[0] = util2.getJSON("loyalty-get?".concat(finalRole));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            t.start();
+            t.join();
+            refreshUser();
+        } catch (Exception e) {
+            Log.e(TAG, "error getting user loyalty or login");
+            e.printStackTrace();
+        }
     }
 
     protected void refreshUser() {
