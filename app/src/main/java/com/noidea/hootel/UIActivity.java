@@ -8,11 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.noidea.hootel.Fragments.HotelFragment;
-import com.noidea.hootel.Fragments.ReservationFragment;
 import com.noidea.hootel.Fragments.UserFragment;
 import com.noidea.hootel.Models.Branch;
 import com.noidea.hootel.Models.Hotel;
-import com.noidea.hootel.Models.Reservation;
 import com.noidea.hootel.Models.User;
 
 public class UIActivity extends AppCompatActivity {

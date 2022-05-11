@@ -67,7 +67,7 @@ public class BookActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Toast happytoast = Toast.makeText(getApplicationContext(),"Booking successfully",Toast.LENGTH_SHORT);
+                Toast happytoast = Toast.makeText(getApplicationContext(),"Booking successfully",Toast.LENGTH_LONG);
                 Toast failedtoast = Toast.makeText(getApplicationContext(),"Can not book this room, please contact hotel",Toast.LENGTH_SHORT);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -81,7 +81,7 @@ public class BookActivity extends AppCompatActivity {
                     }
                 }, 1500);
 
-                Intent intent = new Intent(BookActivity.this, UIActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
                 startActivity(intent);
             }
         });
