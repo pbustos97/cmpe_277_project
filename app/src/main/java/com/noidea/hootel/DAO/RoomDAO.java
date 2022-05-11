@@ -15,8 +15,8 @@ public interface RoomDAO {
     @Query("SELECT * FROM roomTable")
     List<Room> getAll();
 
-    @Query("SELECT * FROM roomTable WHERE roomId IN (:roomIds)")
-    List<Room> getAllByIds(String[] roomIds);
+    @Query("SELECT * FROM roomTable WHERE hotelId LIKE :hotelId")
+    List<Room> getAllByhotelId(String hotelId);
 
     @Query("SELECT * FROM roomTable WHERE roomId LIKE :roomId")
     Room getById(String roomId);

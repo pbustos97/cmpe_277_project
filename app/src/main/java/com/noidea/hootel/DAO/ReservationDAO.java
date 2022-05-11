@@ -20,8 +20,8 @@ public interface ReservationDAO {
     @Query("SELECT * FROM reservationTable WHERE reservationId IN (:reservationIds)")
     List<Reservation> getAllByIds(String[] reservationIds);
 
-    @Query("SELECT * FROM reservationTable WHERE reservationId IN (:reservationIds)")
-    List<Reservation> getByreservationId(String[] reservationIds);
+    @Query("SELECT * FROM reservationTable WHERE reservationId LIKE :reservationId")
+    Reservation getSavedReservationById(String reservationId);
 
     @Insert
     void insertAll(Reservation... reservations);

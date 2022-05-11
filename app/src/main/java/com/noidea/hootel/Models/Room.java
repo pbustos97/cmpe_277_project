@@ -13,13 +13,12 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
 
-@Entity (tableName = "roomTable")
+@Entity (tableName = "roomTable", primaryKeys = {"roomId", "hotelId"})
 public class Room implements Serializable {
-    @PrimaryKey
     @NonNull
     private String roomId;
 
-    @ColumnInfo(name = "hotelId")
+    @NonNull
     private String hotelId;
     @ColumnInfo(name = "roomType")
     private String roomType;

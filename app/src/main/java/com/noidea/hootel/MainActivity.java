@@ -3,32 +3,23 @@ package com.noidea.hootel;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.noidea.hootel.DAO.BranchDAO;
-import com.noidea.hootel.DAO.HotelDAO;
 import com.noidea.hootel.Database.AppDB;
-import com.noidea.hootel.Models.Branch;
 import com.noidea.hootel.Models.Hotel;
 
 import com.noidea.hootel.Fragments.LoginFragment;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
-
+    private  AppDB appDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AppDB appDB = Room.databaseBuilder(getApplicationContext(),
+        appDB = Room.databaseBuilder(getApplicationContext(),
                 AppDB.class, "AppDB").build();
-
-//        BranchDAO branchDAO = appDB.branchDAO();
-//        List<Branch> branchList = branchDAO.getAll();
-//        HotelDAO hotelDAO = appDB.hotelDAO();
-//        List<Hotel> hotelList = hotelDAO.getAll();
 
         Bundle bundle = new Bundle();
         bundle.putString("hotels", Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel)));
@@ -41,5 +32,28 @@ public class MainActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .add(container, fragment, bundle)
                 .commit();
+    }
+
+    public AppDB getDatabase() {
+        return appDB;
+    }
+    private static class HotelAsyncTask extends AsyncTask<Hotel, Void, Boolean> {
+
+        private final AppDB appDB;
+
+        private HotelAsyncTask(AppDB appDB) {
+            this.appDB = appDB;
+        }
+
+        @Override
+        protected Boolean doInBackground(Hotel... hotels) {
+            Hotel hotel = hotels[0];
+            try {
+                appDB.hotelDAO().insertHotel(hotel);
+            } catch (Exception e) {
+                return false;
+            }
+            return true;
+        }
     }
 }

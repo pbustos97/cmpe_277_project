@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.noidea.hootel.Models.Helpers.Address;
 import com.noidea.hootel.Models.Branch;
 import com.noidea.hootel.Models.Hotel;
+import com.noidea.hootel.Repository.HotelRepository;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ public class HotelFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "hotels";
     private static final String ARG_PARAM2 = "branches";
-
+    private HotelRepository hotelRepository;
     private ArrayList<Hotel> hotels;
     private ArrayList<Branch> branches;
 
@@ -52,7 +53,7 @@ public class HotelFragment extends Fragment {
 
         hotels = new ArrayList<Hotel>();
         branches = new ArrayList<Branch>();
-
+        hotelRepository = new HotelRepository(getContext());
         if (getArguments() != null) {
             String hotelStr = getArguments().getString(ARG_PARAM1);
             String branchStr = getArguments().getString(ARG_PARAM2);
@@ -67,7 +68,9 @@ public class HotelFragment extends Fragment {
                     String email = obj.getString("email");
                     String name = obj.getString("HotelName");
                     String ownerId = obj.getString("ownerId");
-                    hotels.add(new Hotel(hotelId, address, email, name, ownerId));
+                    Hotel hotel = new Hotel(hotelId, address, email, name, ownerId);
+                    hotels.add(hotel);
+                    hotelRepository.saveHotel(hotel);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
