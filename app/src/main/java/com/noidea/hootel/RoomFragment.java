@@ -28,11 +28,12 @@ import java.util.concurrent.ExecutionException;
 public class RoomFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "userId";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM2 = "hotelId";
     private final String TAG = RoomFragment.class.getSimpleName();
 
     private String userId;
     private Button reshRoom;
+    private String hotelId;
     private JSONArray rooms;
     private List<Room> roomList;
     public RoomFragment() {
@@ -53,8 +54,10 @@ public class RoomFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userId = getArguments().getString(ARG_PARAM1);
+            hotelId =getArguments().getString(ARG_PARAM2);
         }
-        String url = getString(R.string.api_room).concat("allroomInfo");
+        String url = getString(R.string.api_room).concat("roomInfo?hotelId=").concat(hotelId);
+        Log.d(TAG, "get rooms url ->" + url);
         try {
             rooms = new getJSONArray().execute(url).get();
         } catch (ExecutionException | InterruptedException e) {

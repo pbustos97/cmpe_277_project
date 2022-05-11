@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import com.noidea.hootel.Database.AppDB;
 import com.noidea.hootel.HootelApplication;
 import com.noidea.hootel.Models.Reservation;
-import com.noidea.hootel.Models.Room;
 
 import java.util.List;
 

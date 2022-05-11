@@ -62,6 +62,7 @@ public class HotelActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", userId);
                 bundle.putString("accessToken", accessToken);
+                bundle.putString("hotelId", hotelId);
                 RoomFragment roomFragment = new RoomFragment();
                 roomFragment.setArguments(bundle);
                 FragmentManager fragmentManager = getSupportFragmentManager();
