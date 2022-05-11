@@ -34,4 +34,7 @@ public interface HotelDAO {
 
     @Delete
     void deleteHotel(Hotel hotel);
+
+    @Query("SELECT EXISTS(SELECT * FROM hotel WHERE hotelId = :hotelId)")
+    boolean isRecordExistshotelId(String hotelId);
 }

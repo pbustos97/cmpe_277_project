@@ -12,12 +12,14 @@ import java.util.List;
 
 public class RoomRepository {
     private final AppDB appDB;
+
     public RoomRepository(Context context) {
         appDB = ((HootelApplication)context.getApplicationContext()).getDatabase();
     }
     public List<Room> getAllSavedBranches() {
         return appDB.roomDAO().getAll();
     }
+
     public List<Room> getByhotelId(String hotelId) {
         return appDB.roomDAO().getAllByhotelId(hotelId);
     }

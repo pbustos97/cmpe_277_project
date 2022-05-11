@@ -14,12 +14,13 @@ import android.widget.ListView;
 
 import com.noidea.hootel.BranchListAdapter;
 import com.noidea.hootel.HotelActivity;
-import com.noidea.hootel.HotelListAdapter;
 import com.noidea.hootel.Models.Helpers.Address;
 import com.noidea.hootel.Models.Branch;
 import com.noidea.hootel.Models.Hotel;
 import com.noidea.hootel.Models.User;
 import com.noidea.hootel.R;
+import com.noidea.hootel.Repository.BranchRepository;
+import com.noidea.hootel.Repository.HotelRepository;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,12 +37,11 @@ public class HotelFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "hotels";
     private static final String ARG_PARAM2 = "branches";
-    private static final String ARG_PARAM3 = "userId";
-    private static final String ARG_PARAM4 = "accessToken";
 
     private String hotelStr;
     private String branchStr;
-
+    private HotelRepository hotelRepository;
+    private BranchRepository branchRepository;
     private ArrayList<Hotel> hotels;
     private ArrayList<Branch> branches;
 
@@ -62,7 +62,8 @@ public class HotelFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        hotelRepository = new HotelRepository(getContext());
+        branchRepository = new BranchRepository(getContext());
         hotels = new ArrayList<Hotel>();
         branches = new ArrayList<Branch>();
     }
@@ -97,7 +98,9 @@ public class HotelFragment extends Fragment {
                             String email = obj.getString("email");
                             String name = obj.getString("HotelName");
                             String ownerId = obj.getString("ownerId");
-                            hotels.add(new Hotel(hotelId, address, email, name, ownerId));
+                            Hotel hotel = new Hotel(hotelId, address, email, name, ownerId);
+                            hotels.add(hotel);
+                            hotelRepository.saveHotel(hotel);
                         }
                         JSONObject hotelsObj = new JSONObject(branchStr);
                         for (int i = 0; i < hotels.size(); i++) {
@@ -115,7 +118,9 @@ public class HotelFragment extends Fragment {
                                     String branchName = obj.getString("BranchName");
                                     String branchEmail = obj.getString("email");
                                     String ownerId = obj.getString("ownerId");
-                                    branches.add(new Branch(branchId, hotelId, branchEmail, branchName, address, ownerId));
+                                    Branch branch = new Branch(branchId, hotelId, branchEmail, branchName, address, ownerId);
+                                    branchRepository.saveBranch(branch);
+                                    branches.add(branch);
                                 }
                             }
                         }

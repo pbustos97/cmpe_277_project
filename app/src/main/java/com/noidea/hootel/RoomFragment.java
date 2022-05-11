@@ -29,11 +29,14 @@ public class RoomFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "userId";
     private static final String ARG_PARAM2 = "hotelId";
+    private static final String ARG_PARAM3 = "branchId";
+
     private final String TAG = RoomFragment.class.getSimpleName();
 
     private String userId;
     private Button reshRoom;
     private String hotelId;
+    private String branchId;
     private JSONArray rooms;
     private List<Room> roomList;
     public RoomFragment() {
@@ -55,19 +58,21 @@ public class RoomFragment extends Fragment {
         if (getArguments() != null) {
             userId = getArguments().getString(ARG_PARAM1);
             hotelId =getArguments().getString(ARG_PARAM2);
+            branchId = getArguments().getString(ARG_PARAM3);
         }
-        String url = getString(R.string.api_room).concat("roomInfo?hotelId=").concat(hotelId);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        String url = getString(R.string.api_room).concat("rommInfoByhotel?hotelId=").concat(hotelId);
         Log.d(TAG, "get rooms url ->" + url);
         try {
             rooms = new getJSONArray().execute(url).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_room, container, false);
 
@@ -76,6 +81,9 @@ public class RoomFragment extends Fragment {
 
     public List<Room> getListRoom() throws JSONException, ExecutionException, InterruptedException {
         List<Room> res = new ArrayList<>();
+        if (rooms == null || rooms.length() == 0) {
+            return res;
+        }
         for (int index = 0; index < rooms.length(); index++) {
             JSONObject room = rooms.getJSONObject(index);
             String roomId = room.getString("roomId");
@@ -151,6 +159,8 @@ public class RoomFragment extends Fragment {
                             bundle.putString("roomPrice", roomPrice);
                             bundle.putString("roomType", roomType);
                             bundle.putString("roomName", roomName);
+                            bundle.putString("hotelId", hotelId);
+                            bundle.putString("branchId", branchId);
                             Intent intent = new Intent(getActivity(), RoomActivity.class);
                             intent.putExtras(bundle);
                             onPause();

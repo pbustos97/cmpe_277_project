@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,8 @@ public class BookActivity extends AppCompatActivity {
         Bundle b= getIntent().getExtras();
         String roomId = b.getString("roomId");
         String userId = b.getString("userId");
+        String hotelId = b.getString("hotelId");
+        String branchId = b.getString("branchId");
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -54,7 +57,7 @@ public class BookActivity extends AppCompatActivity {
                 String startdate = checkIn.getText().toString();
                 String enddate = checkOut.getText().toString();
                 String url = "https://5mbz63m677.execute-api.us-west-2.amazonaws.com/prod/booking";
-                String body = getRequestBody(userId, roomId, startdate, enddate);
+                String body = getRequestBody(userId, roomId, branchId, startdate, enddate);
                 myRequest myrequest = new myRequest(url, body);
                 try {
                     JSONObject bookResponse = new sendRequest().execute(myrequest).get();
@@ -77,15 +80,18 @@ public class BookActivity extends AppCompatActivity {
                         }
                     }
                 }, 1500);
+
+                Intent intent = new Intent(BookActivity.this, UIActivity.class);
+                startActivity(intent);
             }
         });
     }
-    private String getRequestBody(String userId, String roomId, String startDate, String enddate) {
+    private String getRequestBody(String userId, String roomId,String branchId, String startDate, String enddate) {
         Log.d("BookActivity", "UserId is ---> " + userId);
         String body = "{\n" +
                 "  \"body\": {\n" +
                 "    \"userId\":" + "\"" + userId + "\",\n" +
-                "    \"branchId\" : \"cb464e63-c36e-4669-8c7c-3436ce4754ff\",\n" +
+                "    \"branchId\":" + "\"" + branchId + "\",\n" +
                 "    \"room\": [\n" +
                 "      {\n" +
                 "        \"roomId\": " + "\"" + roomId + "\", \n" +

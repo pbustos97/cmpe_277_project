@@ -21,9 +21,10 @@ public class MainActivity extends AppCompatActivity {
         appDB = Room.databaseBuilder(getApplicationContext(),
                 AppDB.class, "AppDB").build();
 
-        Bundle bundle = new Bundle();
-        bundle.putString("hotels", Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel)));
-        this.addFragment(R.id.main_container, LoginFragment.class, bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("hotels", Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel)));
+        Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel));
+        this.addFragment(R.id.main_container, LoginFragment.class, null);
 
     }
 

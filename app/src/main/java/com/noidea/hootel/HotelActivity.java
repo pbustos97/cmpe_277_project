@@ -24,6 +24,7 @@ public class HotelActivity extends AppCompatActivity {
     private String hotelName;
     private String hotelAddress;
     private String hotelEmail;
+    private String branchId;
     private String userId;
     private String accessToken;
     private TextView textViewHotelName;
@@ -45,6 +46,7 @@ public class HotelActivity extends AppCompatActivity {
             hotelAddress = intent.getStringExtra("hotelAddress");
             hotelEmail = intent.getStringExtra("hotelEmail");
             accessToken = intent.getStringExtra("accessToken");
+            branchId = intent.getStringExtra("branchId");
         }
 
         textViewHotelName = findViewById(R.id.HotelActivityName);
@@ -63,6 +65,7 @@ public class HotelActivity extends AppCompatActivity {
                 bundle.putString("userId", userId);
                 bundle.putString("accessToken", accessToken);
                 bundle.putString("hotelId", hotelId);
+                bundle.putString("branchId", branchId);
                 RoomFragment roomFragment = new RoomFragment();
                 roomFragment.setArguments(bundle);
                 FragmentManager fragmentManager = getSupportFragmentManager();

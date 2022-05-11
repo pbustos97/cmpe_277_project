@@ -35,6 +35,8 @@ public class RoomActivity extends AppCompatActivity {
                 bundle.putString("roomName", b.getString("roomName"));
                 bundle.putString("roomType", b.getString("roomType"));
                 bundle.putString("userId", b.getString("userId"));
+                bundle.putString("hotelId", b.getString("hotelId"));
+                bundle.putString("branchId", b.getString("branchId"));
                 Intent intent = new Intent(RoomActivity.this, BookActivity.class);
                 intent.putExtras(bundle);
                 onPause();
