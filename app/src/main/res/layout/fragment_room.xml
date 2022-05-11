@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
-        tools:listitem="@layout/room_list"></ListView>
+        tools:listitem="@layout/room_list"
+        android:dividerHeight="10dp"></ListView>
 
     <Button
         android:id="@+id/room_fresh_button"

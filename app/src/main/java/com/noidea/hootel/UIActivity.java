@@ -34,8 +34,12 @@ public class UIActivity extends AppCompatActivity {
         if (fragment.equals("profile")) {
             addFragment(R.id.main_container, UserFragment.class, bundle);
         } else if (fragment.equals("hotels")) {
-            bundle.putString("hotels", Hotel.getHotelList(getString(R.string.api_hotel)));
-            bundle.putString("branches", Branch.getBranchList(getString(R.string.api_hotel)));
+            String hotels = Hotel.getHotelList(getString(R.string.api_hotel));
+            Log.d(TAG, "hotels: ".concat(hotels));
+            bundle.putString("hotels", hotels);
+            String branches = Branch.getBranchList(getString(R.string.api_hotel));
+            Log.d(TAG, "branches: ".concat(branches));
+            bundle.putString("branches", branches);
             addFragment(R.id.main_container, HotelFragment.class, bundle);
         } else if (fragment.equals("reservations")) {
             bundle.putString("reservationList", getIntent().getStringExtra("reservationList"));

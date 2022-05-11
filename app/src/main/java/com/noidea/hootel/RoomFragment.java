@@ -54,7 +54,7 @@ public class RoomFragment extends Fragment {
         if (getArguments() != null) {
             userId = getArguments().getString(ARG_PARAM1);
         }
-        String url = "https://nua5fhfin1.execute-api.us-west-2.amazonaws.com/prod/allroomInfo";
+        String url = getString(R.string.api_room).concat("allroomInfo");
         try {
             rooms = new getJSONArray().execute(url).get();
         } catch (ExecutionException | InterruptedException e) {
@@ -66,54 +66,11 @@ public class RoomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        roomList = new ArrayList<>();
-        RoomAdapter roomAdapter = new RoomAdapter(getActivity(), R.layout.room_list, roomList);
         View view = inflater.inflate(R.layout.fragment_room, container, false);
-        ListView listView = view.findViewById(R.id.room_list_view);
-        listView.setAdapter(roomAdapter);
-        listView.setClickable(true);
-        reshRoom = view.findViewById(R.id.room_fresh_button);
-        reshRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    roomList = getListRoom();
-                } catch (JSONException | ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-                roomAdapter.setRoomList(roomList);
 
-            }
-        });
-        try {
-            roomList = getListRoom();
-        } catch (JSONException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, "test in lsitview : clicked " + i + "th item");
-                Room room = roomList.get(i);
-                String roomId = room.getRoomId();
-                String roomPrice = room.getPrice();
-                String roomType = room.getRoomType();
-                String roomName = room.getRoomName();
-                Bundle bundle = new Bundle();
-                bundle.putString("userId", userId);
-                Log.d(TAG, "userId -->" + userId);
-                bundle.putString("roomId", roomId);
-                bundle.putString("roomPrice", roomPrice);
-                bundle.putString("roomType", roomType);
-                bundle.putString("roomName", roomName);
-                Intent intent = new Intent(getActivity(), RoomActivity.class);
-                intent.putExtras(bundle);
-                onPause();
-                startActivity(intent, bundle);
-            }
-        });
         return view;
     }
+
     public List<Room> getListRoom() throws JSONException, ExecutionException, InterruptedException {
         List<Room> res = new ArrayList<>();
         for (int index = 0; index < rooms.length(); index++) {
@@ -123,5 +80,82 @@ public class RoomFragment extends Fragment {
             res.add(room1);
         }
         return res;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            View view = getView();
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    roomList = new ArrayList<>();
+                    RoomAdapter roomAdapter = new RoomAdapter(getActivity(), R.layout.room_list, roomList);
+                    ListView listView = view.findViewById(R.id.room_list_view);
+                    listView.setAdapter(roomAdapter);
+                    listView.setClickable(true);
+                    reshRoom = view.findViewById(R.id.room_fresh_button);
+                    reshRoom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            try {
+                                Thread t = new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            roomList = getListRoom();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                                t.start();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            roomAdapter.setRoomList(roomList);
+
+                        }
+                    });
+                    try {
+                        roomList = getListRoom();
+                    } catch (JSONException | ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Log.d(TAG, "test in lsitview : clicked " + i + "th item");
+                            Room room = roomList.get(i);
+                            String roomId = room.getRoomId();
+                            String roomPrice = room.getPrice();
+                            String roomType = room.getRoomType();
+                            String roomName = room.getRoomName();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("userId", userId);
+                            Log.d(TAG, "userId -->" + userId);
+                            bundle.putString("roomId", roomId);
+                            bundle.putString("roomPrice", roomPrice);
+                            bundle.putString("roomType", roomType);
+                            bundle.putString("roomName", roomName);
+                            Intent intent = new Intent(getActivity(), RoomActivity.class);
+                            intent.putExtras(bundle);
+                            onPause();
+                            startActivity(intent, bundle);
+                        }
+                    });
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            Log.e(TAG, "Error populating ListView");
+            e.printStackTrace();
+        }
+
     }
 }

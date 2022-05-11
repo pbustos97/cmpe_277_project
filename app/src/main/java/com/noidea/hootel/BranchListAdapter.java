@@ -25,7 +25,6 @@ public class BranchListAdapter extends ArrayAdapter<Branch>{
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Branch branch = getItem(position);
-        final View res;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.selection_item, parent, false);
             hotelNameView = convertView.findViewById(R.id.selection_textView);
