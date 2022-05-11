@@ -108,10 +108,37 @@ public class UserFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject user = userLogin[0].getJSONObject("user");
+                                String name = user.getString("fName") + " ";
+                                name = name.concat(user.getString("lName"));
+                                textViewName.setText(name);
+
+                                textViewEmail.setText(user.getString("email"));
+
+                                String address = user.getString("address");
+                                address = address.concat(" " + user.getString("country"));
+                                textViewAddress.setText(address);
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error populating user data");
+                                e.printStackTrace();
+                            }
+                            try {
+                                JSONObject loyalty = userLoyalty[0].getJSONObject("loyalty");
+                                String points = "Loyalty Points: ".concat(loyalty.getString("amount"));
+                                textViewLoyalty.setText(points);
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error populating loyalty data");
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
             });
             t.start();
-            t.join();
             refreshUser();
         } catch (Exception e) {
             Log.e(TAG, "error getting user loyalty or login");

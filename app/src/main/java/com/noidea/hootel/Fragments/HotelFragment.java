@@ -90,6 +90,7 @@ public class HotelFragment extends Fragment {
                         Log.d(TAG, "hotelStr: ".concat(hotelStr));
                         Log.d(TAG, "branchStr: ".concat(branchStr));
                         JSONArray arr = new JSONArray(hotelStr);
+                        hotels = new ArrayList<Hotel>();
                         for (int i = 0; i < arr.length(); i++) {
                             JSONObject obj = arr.getJSONObject(i);
                             String hotelId = obj.getString("hotelId");
@@ -110,6 +111,7 @@ public class HotelFragment extends Fragment {
                             if (!hotelsObj.getString(hotelId).equals("null")) {
                                 arr = new JSONArray(hotelsObj.getString(hotelId));
                                 Log.d(TAG, "branchArr: ".concat(arr.toString()));
+                                branches = new ArrayList<Branch>();
                                 for (int j = 0; j < arr.length(); j++) {
                                     JSONObject obj = arr.getJSONObject(j);
                                     Address address = new Address(obj.getString("Address"),

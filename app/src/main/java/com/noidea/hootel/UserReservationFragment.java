@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,13 +88,27 @@ public class UserReservationFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-
+        View view = getView();
+        getRes = view.findViewById(R.id.freshRes);
+        listView = view.findViewById(R.id.list_view);
         try {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        reservations = new JSONArray( Reservation.getReservationByuserId(userId) );
+                        String res = Reservation.getReservationByuserId(userId);
+                        if (res == null) {
+                            reservations = new JSONArray();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getRes.setText("No Reservations");
+                                    Toast.makeText(getContext(), userId.concat(" has no reservations"), Toast.LENGTH_LONG);
+                                }
+                            });
+                        } else {
+                            reservations = new JSONArray(Reservation.getReservationByuserId(userId));
+                        }
                         for (int index = 0; index < reservations.length(); index++) {
                             JSONObject reservation = reservations.getJSONObject(index);
                             String reservationId = reservation.getString("reservationId");
@@ -107,9 +122,7 @@ public class UserReservationFragment extends Fragment{
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            View view = getView();
                             reservationAdaper = new ReservationAdaper(getActivity(), R.layout.reservaion_list, reservationList);
-                            listView = view.findViewById(R.id.list_view);
                             listView.setAdapter(reservationAdaper);
                             listView.setClickable(true);
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -156,7 +169,6 @@ public class UserReservationFragment extends Fragment{
                                     startActivity(intent);
                                 }
                             });
-                            getRes = view.findViewById(R.id.freshRes);
                             getRes.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
