@@ -105,6 +105,12 @@ public class RoomFragment extends Fragment {
                                     public void run() {
                                         try {
                                             roomList = getListRoom();
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    roomAdapter.setRoomList(roomList);
+                                                }
+                                            });
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         } catch (ExecutionException e) {
@@ -118,7 +124,6 @@ public class RoomFragment extends Fragment {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            roomAdapter.setRoomList(roomList);
 
                         }
                     });

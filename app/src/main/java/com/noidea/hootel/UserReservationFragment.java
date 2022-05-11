@@ -88,80 +88,98 @@ public class UserReservationFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        ReservationAdaper reservationAdaper = new ReservationAdaper(getActivity(), R.layout.reservaion_list, reservationList);
         View view = inflater.inflate(R.layout.fragment_user_reservation, container, false);
-        ListView listView = view.findViewById(R.id.list_view);
-        listView.setAdapter(reservationAdaper);
-        listView.setClickable(true);
-        getRes = view.findViewById(R.id.freshRes);
-        getRes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    reservationList = getListReservation();
-                } catch (JSONException | ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-                reservationAdaper.setReservations(reservationList);
-            }
-        });
 
-        try {
-            reservationList = getListReservation();
-        } catch (JSONException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, "test in lsitview : clicked " + i + "th item");
-                Reservation reservation = reservationList.get(i);
-                String branchId = reservation.getBranchId();
-                String hotelId = reservation.getHotelId();
-                List<String> roomIds = null;
-                try {
-                    roomIds = reservation.getRoomIds();
-                } catch (JSONException | ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                Branch branch = null;
-                ArrayList<String> roomInfo = new ArrayList<>();
-                try {
-                    branch = Branch.getBranch(branchId, hotelId, "https://2pai97g6d5.execute-api.us-west-2.amazonaws.com/dev/");
-                    for (String roomId : roomIds) {
-                        Room room = Room.getRoom(roomId, "https://nua5fhfin1.execute-api.us-west-2.amazonaws.com/prod/");
-                        roomInfo.add(room.toString());
-                    }
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                Bundle bundle = new Bundle();
-                bundle.putString("custmoerLastName", reservation.getCustmoerFirstName() + " " + reservation.getCustmoerLastName());
-                bundle.putString("startDate", reservation.getStartDate());
-                bundle.putString("endDate", reservation.getEndDate());
-                bundle.putString("Address", branch.getAddress());
-                bundle.putString("price", reservation.getPrice());
-                bundle.putString("email", branch.getEmail());
-                bundle.putString("reservationId", reservation.getReservationId());
-                bundle.putStringArrayList("bookingInfo", roomInfo);
-                bundle.putString("status", reservation.getReservationStatus());
-                bundle.putString("userId", getArguments().getString(ARG_PARAM1));
-                bundle.putString("accessToken", getArguments().getString(ARG_PARAM3));
-                Intent intent = new Intent(getActivity(),ReservationActivity.class);
-                intent.putExtras(bundle);
-                onPause();
-                startActivity(intent);
-            }
-        });
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    View view = getView();
+                    ReservationAdaper reservationAdaper = new ReservationAdaper(getActivity(), R.layout.reservaion_list, reservationList);
+                    ListView listView = view.findViewById(R.id.list_view);
+                    listView.setAdapter(reservationAdaper);
+                    listView.setClickable(true);
+
+                    try {
+                        reservationList = getListReservation();
+                    } catch (JSONException | ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Log.d(TAG, "test in lsitview : clicked " + i + "th item");
+                            Reservation reservation = reservationList.get(i);
+                            String branchId = reservation.getBranchId();
+                            String hotelId = reservation.getHotelId();
+                            List<String> roomIds = null;
+                            try {
+                                roomIds = reservation.getRoomIds();
+                            } catch (JSONException | ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            Branch branch = null;
+                            ArrayList<String> roomInfo = new ArrayList<>();
+                            try {
+                                branch = Branch.getBranch(branchId, hotelId, "https://2pai97g6d5.execute-api.us-west-2.amazonaws.com/dev/");
+                                for (String roomId : roomIds) {
+                                    Room room = Room.getRoom(roomId, "https://nua5fhfin1.execute-api.us-west-2.amazonaws.com/prod/");
+                                    roomInfo.add(room.toString());
+                                }
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("custmoerLastName", reservation.getCustmoerFirstName() + " " + reservation.getCustmoerLastName());
+                            bundle.putString("startDate", reservation.getStartDate());
+                            bundle.putString("endDate", reservation.getEndDate());
+                            bundle.putString("Address", branch.getAddress());
+                            bundle.putString("price", reservation.getPrice());
+                            bundle.putString("email", branch.getEmail());
+                            bundle.putString("reservationId", reservation.getReservationId());
+                            bundle.putStringArrayList("bookingInfo", roomInfo);
+                            bundle.putString("status", reservation.getReservationStatus());
+                            bundle.putString("userId", getArguments().getString(ARG_PARAM1));
+                            bundle.putString("accessToken", getArguments().getString(ARG_PARAM3));
+                            Intent intent = new Intent(getActivity(),ReservationActivity.class);
+                            intent.putExtras(bundle);
+                            onPause();
+                            startActivity(intent);
+                        }
+                    });
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getRes = view.findViewById(R.id.freshRes);
+                            getRes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    try {
+                                        reservationList = getListReservation();
+                                    } catch (JSONException | ExecutionException | InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    reservationAdaper.setReservations(reservationList);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            Log.e(TAG, "Error population reservations");
+            e.printStackTrace();
+        }
     }
 
     @Override
