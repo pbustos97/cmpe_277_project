@@ -12,22 +12,14 @@ import com.noidea.hootel.Models.Hotel;
 import com.noidea.hootel.Fragments.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private  AppDB appDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        appDB = Room.databaseBuilder(getApplicationContext(),
-                AppDB.class, "AppDB").build();
-
-//        Bundle bundle = new Bundle();
-//        bundle.putString("hotels", Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel)));
-        Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel));
+//        Hotel.getHotelList(getApplicationContext().getString(R.string.api_hotel));
         this.addFragment(R.id.main_container, LoginFragment.class, null);
-
     }
-
     protected void addFragment(int container, Class fragment, Bundle bundle) {
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
@@ -35,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public AppDB getDatabase() {
-        return appDB;
-    }
     private static class HotelAsyncTask extends AsyncTask<Hotel, Void, Boolean> {
 
         private final AppDB appDB;
