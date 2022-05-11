@@ -283,7 +283,9 @@ public class Reservation implements Serializable {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
+        if (reservationArr == null) {
+            return null;
+        }
         res[0] = reservationArr.toString();
         return res[0];
     }
